@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+}
+
+.btn {
+  /*
+  display: block;
+  background-color: white;
+  border: 0;
+  box-shadow: #d8d8d8 0px 2px 5px 2px;
+  color: #3249c7;
+  font-weight: bold;
+  border-radius: 3px;
+  padding: 0;
+  margin: 0.5em auto;
+  cursor: pointer;*/
+}
+
+section {
+  text-align: center;
+  padding: 3em 0;
+}
+
+.task_title {
+  color: #7f7f7f;
+}
+
+clock-face {
+  position: relative;
+  display: block;
+  width: 260px;
+  height: 260px;
+  margin: 2em auto;
+}
+clock-face text {
+  font-size: 21px;
+  color: #3249c7;
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table tbody tr,
+table thead tr {
+  border-bottom: 1px #e0e0e0 solid;
+}
+table tbody tr{
+  background-color: #e9f6ff;
+}
+table td,
+table th {
+
+}
+table thead tr th {
+  padding: 1em;
+  color: #bababa;
+}
+table tbody tr td {
+  padding: 1em;
+  color: #3249c7;
+}
