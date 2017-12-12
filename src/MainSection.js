@@ -78,11 +78,11 @@ class MainSection extends React.Component {
     }
 
     handleTaskNameChange(e){
-        this.setState({taskName:e.target.value});
+        this.setState({ taskName : e.target.value });
     }
 
     hideWarningDialog(){
-        this.setState({validation : {emptyTaskNameWarning: false }});
+        this.setState({ validation : { emptyTaskNameWarning: false }});
     }
 
     render() {
@@ -102,7 +102,7 @@ class MainSection extends React.Component {
 
                 <p className="tack_title">Name of your task</p>
 
-                <TextField type="text" value={this.state.taskName} onChange={(e)=>this.handleTaskNameChange(e)}  />
+                <TextField id="taskName" type="text" value={this.state.taskName} onChange={(e)=>this.handleTaskNameChange(e)}  />
 
                 <Paper circle={true} style={paperStyle}>
                     <h1 style={currentTimeStyle}>{this.state.currTime}</h1>

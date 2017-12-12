@@ -20,14 +20,15 @@ import ChartSection from "./ChartSection";
 *   ChartSection
 */
 
-
 class App extends React.Component {
     render() {
         return (
             <MuiThemeProvider muiTheme={bro3Theme}>
-                <MainSection />
-                <TableSection />
-                <ChartSection />
+                <main>
+                    <MainSection />
+                    <TableSection />
+                    <ChartSection />
+                </main>
             </MuiThemeProvider>
         );
     }

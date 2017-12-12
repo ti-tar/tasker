@@ -43,8 +43,8 @@ function ButtonClickHandler(){
 
 // http://www.material-ui.com/#/components/raised-button
 const GenTableRows = ({rows}) => {
-        return rows.map( tr =>
-            <TableRow>
+        return rows.map( (tr, index) =>
+            <TableRow key={index}>
                 <TableRowColumn>{tr.id}</TableRowColumn>
                 <TableRowColumn>{tr.name_of_tasks}</TableRowColumn>
                 <TableRowColumn>{tr.time_start}</TableRowColumn>
