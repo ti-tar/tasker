@@ -1,7 +1,7 @@
 import React from 'react';
 
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
 import { Table, TableHeader, TableBody, TableRow, TableHeaderColumn, TableRowColumn, RaisedButton } from "material-ui";
+
 
 const rows = [{
     id: 1,
@@ -37,34 +37,25 @@ const rows = [{
     delete: ""
 }];
 
-function ButtonClickHandler(){
-    console.log('Button Click Handler');
-}
+class TableSection extends React.Component {
+    constructor(attr){
+        super(attr);
 
-// http://www.material-ui.com/#/components/raised-button
-const GenTableRows = ({rows}) => {
-        return rows.map( (tr, index) =>
-            <TableRow key={index}>
-                <TableRowColumn>{tr.id}</TableRowColumn>
-                <TableRowColumn>{tr.name_of_tasks}</TableRowColumn>
-                <TableRowColumn>{tr.time_start}</TableRowColumn>
-                <TableRowColumn>{tr.time_end}</TableRowColumn>
-                <TableRowColumn>{tr.time_spend}</TableRowColumn>
-                <TableRowColumn>
-                    <RaisedButton onClick={ButtonClickHandler}>INFO</RaisedButton>
-                </TableRowColumn>
-                <TableRowColumn>
-                    <RaisedButton onClick={ButtonClickHandler}>DELETE</RaisedButton>
-                </TableRowColumn>
-            </TableRow>
-        );
-    };
+        // TODO позже завяжу это с редаксом
+        this.rows = rows
+    }
 
+    taskInfo(e, id){
+        console.log(`taskInfo ${id}`);
+    }
+    taskDelete(e){
+        console.log('taskDelete');
+    }
 
-function TableSection() {
-
-    return <section>
+    render() {
+        return <section>
             <Table>
+
                 <TableHeader>
                     <TableRow>
                         <TableHeaderColumn>№</TableHeaderColumn>
@@ -78,11 +69,28 @@ function TableSection() {
                 </TableHeader>
 
                 <TableBody>
-                    <GenTableRows rows={rows} />
+                    {
+                        this.rows.map( (tr, index) =>
+                            <TableRow key={index}>
+                                <TableRowColumn>{tr.id}</TableRowColumn>
+                                <TableRowColumn>{tr.name_of_tasks}</TableRowColumn>
+                                <TableRowColumn>{tr.time_start}</TableRowColumn>
+                                <TableRowColumn>{tr.time_end}</TableRowColumn>
+                                <TableRowColumn>{tr.time_spend}</TableRowColumn>
+                                <TableRowColumn>
+                                    <RaisedButton onClick={ (e, td) => this.taskInfo(e, td.id) }>INFO</RaisedButton>
+                                </TableRowColumn>
+                                <TableRowColumn>
+                                    <RaisedButton onClick={ (e) => this.taskDelete(e) }>DELETE</RaisedButton>
+                                </TableRowColumn>
+                            </TableRow>
+                        )
+                    }
                 </TableBody>
 
             </Table>
-    </section>
+        </section>;
+    }
 }
 
 export default TableSection;

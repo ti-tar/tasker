@@ -1,14 +1,7 @@
 import React from "react";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { lightBlue800, cyan400, pink500 } from 'material-ui/styles/colors'
+import {  pink500 } from 'material-ui/styles/colors'
 import { TextField , RaisedButton , Paper, Dialog, FlatButton } from "material-ui";
 
-
-const titleTaskStyle = {
-    display: 'block',
-    color: 'gray',
-    margin: '1em auto',
-};
 
 const currentTimeStyle = {
     fontSize: `21px`,
@@ -94,6 +87,7 @@ class MainSection extends React.Component {
         const titleStyle = {
             color: pink500
         };
+
         return <section>
 
                 <Dialog open={this.state.validation.emptyTaskNameWarning} titleStyle={titleStyle} actions={buttons} title="Empty task name!">
@@ -109,6 +103,7 @@ class MainSection extends React.Component {
                 </Paper>
 
                 <RaisedButton onClick={ () => this.clockStatusToggle() }>{ this.state.status ? 'STOP' : 'START' }</RaisedButton>
+
             </section>;
     }
 }

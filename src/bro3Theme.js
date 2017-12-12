@@ -1,4 +1,3 @@
-import React from 'react';
 import {cyan500,cyan700,grey400} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
