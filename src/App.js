@@ -7,9 +7,9 @@ import bro3Theme from './bro3Theme'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import MainSection from "./components/Main";
-import TableSection from "./components/Table";
-import ChartSection from "./components/Chart";
+import MainComponent from "./components/MainComponent";
+import TableComponent from "./components/TableComponent";
+import ChartComponent from "./components/ChartComponent";
 
 /*
 * действия с нашим тасклистом
@@ -50,9 +50,9 @@ class App extends React.Component {
             <BrowserRouter>
                 <MuiThemeProvider muiTheme={bro3Theme}>
                     <main>
-                        <MainSection />
-                        <TableSection />
-                        <ChartSection />
+                        <MainComponent />
+                        <TableComponent />
+                        <ChartComponent />
                     </main>
                 </MuiThemeProvider>
             </BrowserRouter>

@@ -20,7 +20,7 @@ const paperStyle = {
 };
 
 //http://www.material-ui.com/#/components/paper
-class MainSection extends React.Component {
+class MainComponent extends React.Component {
     constructor(args) {
         super(args);
 
@@ -108,4 +108,4 @@ class MainSection extends React.Component {
     }
 }
 
-export default MainSection;
+export default MainComponent;

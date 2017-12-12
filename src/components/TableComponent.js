@@ -37,7 +37,7 @@ const rows = [{
     delete: ""
 }];
 
-class TableSection extends React.Component {
+class TableComponent extends React.Component {
     constructor(attr){
         super(attr);
 
@@ -48,8 +48,8 @@ class TableSection extends React.Component {
     taskInfo(e, id){
         console.log(`taskInfo ${id}`);
     }
-    taskDelete(e){
-        console.log('taskDelete');
+    taskDelete(e, id){
+        console.log(`taskDelete ${id}`);
     }
 
     render() {
@@ -78,10 +78,10 @@ class TableSection extends React.Component {
                                 <TableRowColumn>{tr.time_end}</TableRowColumn>
                                 <TableRowColumn>{tr.time_spend}</TableRowColumn>
                                 <TableRowColumn>
-                                    <RaisedButton onClick={ (e, td) => this.taskInfo(e, td.id) }>INFO</RaisedButton>
+                                    <RaisedButton onClick={ (e, td) => this.taskInfo(e, tr.id) }>INFO</RaisedButton>
                                 </TableRowColumn>
                                 <TableRowColumn>
-                                    <RaisedButton onClick={ (e) => this.taskDelete(e) }>DELETE</RaisedButton>
+                                    <RaisedButton onClick={ (e) => this.taskDelete(e, tr.id) }>DELETE</RaisedButton>
                                 </TableRowColumn>
                             </TableRow>
                         )
@@ -93,4 +93,4 @@ class TableSection extends React.Component {
     }
 }
 
-export default TableSection;
+export default TableComponent;
