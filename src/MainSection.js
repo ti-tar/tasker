@@ -1,7 +1,7 @@
 import React from "react";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { lightBlue800 } from 'material-ui/styles/colors'
-import { TextField , RaisedButton , Paper } from "material-ui";
+import { lightBlue800, cyan400, pink500 } from 'material-ui/styles/colors'
+import { TextField , RaisedButton , Paper, Dialog, FlatButton } from "material-ui";
 
 
 const titleTaskStyle = {
@@ -35,7 +35,10 @@ class MainSection extends React.Component {
             // status 0,1 - 0 - stopped, 1 - running
             status : 0,
             taskName : "Enter the Task Name",
-            currTime : "00:00:00"
+            currTime : "00:00:00",
+            validation : {
+                emptyTaskNameWarning : false
+            }
         };
 
         this.timerId = null
@@ -55,7 +58,14 @@ class MainSection extends React.Component {
     }
 
     startRunning(){
+
+        if (this.state.taskName === "Enter the Task Name"  || ! this.state.taskName){
+            this.setState({validation : {emptyTaskNameWarning: true }});
+            return false;
+        }
+
         this.setState({status:1});
+
         this.timerId = setInterval(() => {
             let today = new Date();
             let [h, m, s] = [today.getHours(), today.getMinutes(), today.getSeconds()];
@@ -71,8 +81,25 @@ class MainSection extends React.Component {
         this.setState({taskName:e.target.value});
     }
 
+    hideWarningDialog(){
+        this.setState({validation : {emptyTaskNameWarning: false }});
+    }
+
     render() {
+
+        const buttons = [
+            <FlatButton label="Cancel" onClick={()=> this.hideWarningDialog()}/>
+        ];
+
+        const titleStyle = {
+            color: pink500
+        };
         return <section>
+
+                <Dialog open={this.state.validation.emptyTaskNameWarning} titleStyle={titleStyle} actions={buttons} title="Empty task name!">
+                    You've missed to fill the task name.
+                </Dialog>
+
                 <p className="tack_title">Name of your task</p>
 
                 <TextField type="text" value={this.state.taskName} onChange={(e)=>this.handleTaskNameChange(e)}  />
