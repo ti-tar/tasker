@@ -26,40 +26,6 @@ const paperStyle = {
     zDepth: 1
 };
 
-
-class TaskNameInput extends React.Component {
-    constructor (props){
-        super(props);
-
-        this.state = {value: "Enter the Task Name"};
-
-        this.handleChange = this.handleChange.bind(this)
-    }
-
-    handleChange(e) {
-        this.setState({value:e.target.value});
-    }
-
-    render() {
-        return (
-            <TextField type="text" value={this.state.value} onChange={this.handleChange}  />
-        )
-    }
-}
-
-function getCurrentTime() {
-    var today = new Date();
-    var h = today.getHours();
-    var m = today.getMinutes();
-    m = m < 10 ? "0" + m : m;
-    var s = today.getSeconds();
-    s = s < 10 ? "0" + s : s;
-
-    return h + ":" + m + ":" + s;
-}
-
-const FormattedTime = () => (<h1 style={currentTimeStyle}>{getCurrentTime()}</h1>);
-
 //http://www.material-ui.com/#/components/paper
 class MainSection extends React.Component {
     constructor(args) {
@@ -68,20 +34,53 @@ class MainSection extends React.Component {
         this.state = {
             // status 0,1 - 0 - stopped, 1 - running
             status : 0,
-        }
+            taskName : "Enter the Task Name",
+            currTime : "00:00:00"
+        };
+
+        this.timerId = null
     }
 
     clockStatusToggle(){
-        this.setState({
-            status: this.state.status ? 0 : 1
-        });
+        if (this.state.status === 1){
+            this.stopRunning()
+        } else {
+            this.startRunning()
+        }
+    }
+
+    stopRunning(){
+        this.setState({status:0});
+        clearInterval(this.timerId);
+    }
+
+    startRunning(){
+        this.setState({status:1});
+        this.timerId = setInterval(() => {
+            let today = new Date();
+            let [h, m, s] = [today.getHours(), today.getMinutes(), today.getSeconds()];
+
+            m = m < 10 ? "0" + m : m;
+            s = s < 10 ? "0" + s : s;
+
+            this.setState({ currTime : `${h}:${m}:${s}` });
+        }, 500)
+    }
+
+    handleTaskNameChange(e){
+        this.setState({taskName:e.target.value});
     }
 
     render() {
         return <section>
                 <p className="tack_title">Name of your task</p>
-                <TaskNameInput />
-                <Paper circle={true} style={paperStyle} children={<FormattedTime />}></Paper>
+
+                <TextField type="text" value={this.state.taskName} onChange={(e)=>this.handleTaskNameChange(e)}  />
+
+                <Paper circle={true} style={paperStyle}>
+                    <h1 style={currentTimeStyle}>{this.state.currTime}</h1>
+                </Paper>
+
                 <RaisedButton onClick={ () => this.clockStatusToggle() }>{ this.state.status ? 'STOP' : 'START' }</RaisedButton>
             </section>;
     }
