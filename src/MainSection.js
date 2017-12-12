@@ -27,7 +27,6 @@ const paperStyle = {
 };
 
 
-
 class TaskNameInput extends React.Component {
     constructor (props){
         super(props);
@@ -61,22 +60,31 @@ function getCurrentTime() {
 
 const FormattedTime = () => (<h1 style={currentTimeStyle}>{getCurrentTime()}</h1>);
 
-function ButtonClickHandler(){
-    console.log('Button Click Handler');
-}
-
 //http://www.material-ui.com/#/components/paper
-const MainSection = () => (
-    <section>
-        <p className="tack_title">Name of your task</p>
+class MainSection extends React.Component {
+    constructor(args) {
+        super(args);
 
-        <MuiThemeProvider>
-            <TaskNameInput />
-            <Paper circle={true} style={paperStyle} children={<FormattedTime />}></Paper>
-            <RaisedButton className="btn" onClick={ButtonClickHandler}>STOP</RaisedButton>
-        </MuiThemeProvider>
-    </section>
-);
+        this.state = {
+            // status 0,1 - 0 - stopped, 1 - running
+            status : 0,
+        }
+    }
 
+    clockStatusToggle(){
+        this.setState({
+            status: this.state.status ? 0 : 1
+        });
+    }
+
+    render() {
+        return <section>
+                <p className="tack_title">Name of your task</p>
+                <TaskNameInput />
+                <Paper circle={true} style={paperStyle} children={<FormattedTime />}></Paper>
+                <RaisedButton onClick={ () => this.clockStatusToggle() }>{ this.state.status ? 'STOP' : 'START' }</RaisedButton>
+            </section>;
+    }
+}
 
 export default MainSection;

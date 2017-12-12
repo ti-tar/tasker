@@ -1,7 +1,6 @@
 import React from 'react';
 
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
-import bro3Theme from './bro3Theme'
 import { Table, TableHeader, TableBody, TableRow, TableHeaderColumn, TableRowColumn, RaisedButton } from "material-ui";
 
 const rows = [{
@@ -65,7 +64,6 @@ const GenTableRows = ({rows}) => {
 function TableSection() {
 
     return <section>
-        <MuiThemeProvider muiTheme={bro3Theme}>
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -84,7 +82,6 @@ function TableSection() {
                 </TableBody>
 
             </Table>
-        </MuiThemeProvider>
     </section>
 }
 

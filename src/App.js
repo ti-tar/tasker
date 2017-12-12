@@ -1,7 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import bro3Theme from './bro3Theme'
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import MainSection from "./MainSection";
 import TableSection from "./TableSection";
@@ -23,11 +24,11 @@ import ChartSection from "./ChartSection";
 class App extends React.Component {
     render() {
         return (
-            <div>
+            <MuiThemeProvider muiTheme={bro3Theme}>
                 <MainSection />
                 <TableSection />
                 <ChartSection />
-            </div>
+            </MuiThemeProvider>
         );
     }
 }
