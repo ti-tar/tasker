@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import {  pink500 } from 'material-ui/styles/colors'
 import { TextField , RaisedButton , Paper, Dialog, FlatButton } from "material-ui";
 
@@ -20,7 +21,7 @@ const paperStyle = {
 };
 
 //http://www.material-ui.com/#/components/paper
-class MainComponent extends React.Component {
+class MainContainer extends React.Component {
     constructor(args) {
         super(args);
 
@@ -108,4 +109,4 @@ class MainComponent extends React.Component {
     }
 }
 
-export default MainComponent;
+export default MainContainer;

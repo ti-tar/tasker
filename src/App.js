@@ -1,5 +1,4 @@
 import React from 'react';
-import { createStore } from 'redux';
 import { BrowserRouter } from 'react-router-dom';
 
 
@@ -7,31 +6,9 @@ import bro3Theme from './bro3Theme'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import MainComponent from "./components/MainComponent";
-import TableComponent from "./components/TableComponent";
+import MainContainer from "./containers/MainContainer";
+import TableContainer from "./containers/TableContainer";
 import ChartComponent from "./components/ChartComponent";
-
-/*
-* действия с нашим тасклистом
-*/
-
-function tasksList(state = 0, action) {
-    if (action.type === 'taskDelete') {
-        return "new state obj ...";
-    }
-    return state;
-}
-
-
-/*
-* сам тасклист
-*
-*/
-
-let store = createStore(tasksList);
-
-store.subscribe(() => console.log(store.getStore()));
-
 
 /*
 * Три компонента
@@ -50,8 +27,8 @@ class App extends React.Component {
             <BrowserRouter>
                 <MuiThemeProvider muiTheme={bro3Theme}>
                     <main>
-                        <MainComponent />
-                        <TableComponent />
+                        <MainContainer />
+                        <TableContainer />
                         <ChartComponent />
                     </main>
                 </MuiThemeProvider>

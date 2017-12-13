@@ -37,7 +37,7 @@ const rows = [{
     delete: ""
 }];
 
-class TableComponent extends React.Component {
+class TableContainer extends React.Component {
     constructor(attr){
         super(attr);
 
@@ -93,4 +93,4 @@ class TableComponent extends React.Component {
     }
 }
 
-export default TableComponent;
+export default TableContainer;
