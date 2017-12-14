@@ -28,9 +28,7 @@ const paperStyle = {
 class MainContainer extends React.Component {
     constructor(args) {
         super(args);
-
         this.state = args;
-
         this.timerId = null
     }
 
