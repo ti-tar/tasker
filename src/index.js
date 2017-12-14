@@ -1,6 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import helloSaga from './sagas';
+
 import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
@@ -10,11 +13,16 @@ import initialState from './initialState';
 
 import registerServiceWorker from './registerServiceWorker';
 
+const sagaMiddleware = createSagaMiddleware();
+
 let store = createStore(
     reducer,
     initialState,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    // applyMiddleware(sagaMiddleware),
+    window.devToolsExtension && window.devToolsExtension(),
 );
+
+//sagaMiddleware.run(helloSaga());
 
 render(
     <Provider store={store}>

@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from 'react-redux';
 
-import { start_task, end_task } from '../actions';
+import { end_task } from '../actions';
 
-import {  pink500 } from 'material-ui/styles/colors'
+import { pink500 } from 'material-ui/styles/colors'
+
 import { TextField , RaisedButton , Paper, Dialog, FlatButton } from "material-ui";
 
 
@@ -28,8 +29,6 @@ class MainContainer extends React.Component {
     constructor(args) {
         super(args);
 
-        console.log(args);
-
         this.state = args;
 
         this.timerId = null
@@ -43,10 +42,20 @@ class MainContainer extends React.Component {
         }
     }
 
-    stopRunning(id = 0){
+    stopRunning(){
+
         this.setState({status:0});
         clearInterval(this.timerId);
-        this.props.onEndTask(id);
+
+        let finishedTask = {
+            name_of_tasks: this.state.taskName,
+            time_start: this.dateObjectToString(this.state.startDate),
+            time_end: this.dateObjectToString(new Date()),
+            time_spend: ((new Date()).getTime() - this.state.startDate.getTime()) / 1000
+        };
+
+        this.props.onEndTask(finishedTask);
+
     }
 
     startRunning(){
@@ -56,21 +65,23 @@ class MainContainer extends React.Component {
             return false;
         }
 
-        this.setState({status:1});
-
-        this.props.onStartTask();
+        this.setState({
+            status:1,
+            startDate: new Date()
+        });
 
         this.timerId = setInterval(() => {
-            let today = new Date();
-            let [h, m, s] = [today.getHours(), today.getMinutes(), today.getSeconds()];
-
-            m = m < 10 ? "0" + m : m;
-            s = s < 10 ? "0" + s : s;
-
-            this.setState({ currTime : `${h}:${m}:${s}` });
+            this.setState({ currTime : this.dateObjectToString(new Date()) });
         }, 500)
+    }
 
+    dateObjectToString(dateObject){
+        let [h, m, s] = [dateObject.getHours(), dateObject.getMinutes(), dateObject.getSeconds()];
 
+        m = m < 10 ? "0" + m : m;
+        s = s < 10 ? "0" + s : s;
+
+        return `${h}:${m}:${s}`;
     }
 
     handleTaskNameChange(e){
@@ -118,11 +129,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        onStartTask: () => {
-            dispatch(start_task());
-        },
-        onEndTask: (id) => {
-            dispatch(end_task(id));
+        onEndTask: (task) => {
+            dispatch(end_task(task));
         }
     }
 };
