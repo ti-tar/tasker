@@ -9,14 +9,14 @@ export const start_task = () => {
     }
 };
 
-export const end_task = () => {
+export const end_task = (id) => {
     return {
-        type: END_TASK
+        type: END_TASK, id
     }
 };
 
-export const delete_task = () => {
+export const delete_task = (id) => {
     return {
-        type: DELETE_TASK
+        type: DELETE_TASK, id
     }
 };

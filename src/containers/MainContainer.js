@@ -1,5 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
+
+import { start_task, end_task } from '../actions';
+
 import {  pink500 } from 'material-ui/styles/colors'
 import { TextField , RaisedButton , Paper, Dialog, FlatButton } from "material-ui";
 
@@ -20,20 +23,14 @@ const paperStyle = {
     zDepth: 1
 };
 
-//http://www.material-ui.com/#/components/paper
+
 class MainContainer extends React.Component {
     constructor(args) {
         super(args);
 
-        this.state = {
-            // status 0,1 - 0 - stopped, 1 - running
-            status : 0,
-            taskName : "Enter the Task Name",
-            currTime : "00:00:00",
-            validation : {
-                emptyTaskNameWarning : false
-            }
-        };
+        console.log(args);
+
+        this.state = args;
 
         this.timerId = null
     }
@@ -46,9 +43,10 @@ class MainContainer extends React.Component {
         }
     }
 
-    stopRunning(){
+    stopRunning(id = 0){
         this.setState({status:0});
         clearInterval(this.timerId);
+        this.props.onEndTask(id);
     }
 
     startRunning(){
@@ -60,6 +58,8 @@ class MainContainer extends React.Component {
 
         this.setState({status:1});
 
+        this.props.onStartTask();
+
         this.timerId = setInterval(() => {
             let today = new Date();
             let [h, m, s] = [today.getHours(), today.getMinutes(), today.getSeconds()];
@@ -69,6 +69,8 @@ class MainContainer extends React.Component {
 
             this.setState({ currTime : `${h}:${m}:${s}` });
         }, 500)
+
+
     }
 
     handleTaskNameChange(e){
@@ -91,22 +93,38 @@ class MainContainer extends React.Component {
 
         return <section>
 
-                <Dialog open={this.state.validation.emptyTaskNameWarning} titleStyle={titleStyle} actions={buttons} title="Empty task name!">
-                    You've missed to fill the task name.
-                </Dialog>
+            <Dialog open={this.state.validation.emptyTaskNameWarning} titleStyle={titleStyle} actions={buttons} title="Empty task name!">
+                You've missed to fill the task name.
+            </Dialog>
 
-                <p className="tack_title">Name of your task</p>
+            <p className="tack_title">Name of your task</p>
 
-                <TextField id="taskName" type="text" value={this.state.taskName} onChange={(e)=>this.handleTaskNameChange(e)}  />
+            <TextField id="taskName" type="text" value={this.state.taskName} onChange={(e)=>this.handleTaskNameChange(e)}  />
 
-                <Paper circle={true} style={paperStyle}>
-                    <h1 style={currentTimeStyle}>{this.state.currTime}</h1>
-                </Paper>
+            <Paper circle={true} style={paperStyle}>
+                <h1 style={currentTimeStyle}>{this.state.currTime}</h1>
+            </Paper>
 
-                <RaisedButton onClick={ () => this.clockStatusToggle() }>{ this.state.status ? 'STOP' : 'START' }</RaisedButton>
+            <RaisedButton onClick={ () => this.clockStatusToggle() }>{ this.state.status ? 'STOP' : 'START' }</RaisedButton>
 
-            </section>;
+        </section>;
     }
 }
 
-export default MainContainer;
+
+const mapStateToProps = (state, ownProps) => {
+    return state;
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        onStartTask: () => {
+            dispatch(start_task());
+        },
+        onEndTask: (id) => {
+            dispatch(end_task(id));
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);
