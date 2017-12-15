@@ -16,23 +16,22 @@ export default (state = {}, action ) => {
 
             console.log(newTask);
 
+            let newState1 = {...state, taskCounter: newTaskCounter, tasks: [...state.tasks, newTask]};
 
-                // TODO сделать через saga
-                localStorage.setItem(localStorageKey, JSON.stringify(state));
+            // TODO сделать через saga
+            localStorage.setItem(localStorageKey, JSON.stringify(newState1));
 
-
-            return {...state, taskCounter: newTaskCounter, tasks: [...state.tasks, newTask]};
+            return newState1;
 
         case 'DELETE_TASK':
-            // сохранение в локалстораж
+            let newState = {...state, tasks: state.tasks.filter(task=>task.id !== action.id)};
 
-                // TODO сделать через saga
-                localStorage.setItem(localStorageKey, JSON.stringify(state));
+            // TODO сделать через saga
+            localStorage.setItem(localStorageKey, JSON.stringify(newState));
 
-            return {...state, tasks: state.tasks.filter(task=>task.id !== action.id)};
+            return newState;
 
         case 'SAGA_ACTION':
-            console.log();
             return { ...state };
 
         default:
