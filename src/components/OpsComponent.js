@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { end_task } from '../actions';
 import { pink500 } from 'material-ui/styles/colors'
 import { TextField , RaisedButton , Paper, Dialog, FlatButton } from "material-ui";
@@ -23,10 +24,11 @@ const paperStyle = {
 
 
 class OpsComponent extends React.Component {
+
     constructor(args) {
         super(args);
         this.state = args;
-        this.timerId = null
+        this.timerId = null;
     }
 
     clockStatusToggle(){
@@ -35,22 +37,6 @@ class OpsComponent extends React.Component {
         } else {
             this.startRunning()
         }
-    }
-
-    stopRunning(){
-
-        this.setState({status:0});
-        clearInterval(this.timerId);
-
-        let finishedTask = {
-            name_of_tasks: this.state.taskName,
-            time_start: this.dateObjectToString(this.state.startDate),
-            time_end: this.dateObjectToString(new Date()),
-            time_spend: ((new Date()).getTime() - this.state.startDate.getTime()) / 1000
-        };
-
-        this.props.onEndTask(finishedTask);
-
     }
 
     startRunning(){
@@ -62,21 +48,28 @@ class OpsComponent extends React.Component {
 
         this.setState({
             status:1,
-            startDate: new Date()
+            startDate: (new Date()).valueOf()
         });
 
         this.timerId = setInterval(() => {
-            this.setState({ currTime : this.dateObjectToString(new Date()) });
+            this.setState({ currTime : (new Date()).valueOf() });
         }, 500)
     }
 
-    dateObjectToString(dateObject){
-        let [h, m, s] = [dateObject.getHours(), dateObject.getMinutes(), dateObject.getSeconds()];
+    stopRunning(){
 
-        m = m < 10 ? "0" + m : m;
-        s = s < 10 ? "0" + s : s;
+        this.setState({status:0});
+        clearInterval(this.timerId);
 
-        return `${h}:${m}:${s}`;
+        let finishedTask = {
+            name_of_tasks: this.state.taskName,
+            time_start: this.state.startDate,
+            time_end: (new Date()).valueOf(),
+            status: 1,
+        };
+
+        this.props.onEndTask(finishedTask);
+
     }
 
     handleTaskNameChange(e){
@@ -85,6 +78,10 @@ class OpsComponent extends React.Component {
 
     hideWarningDialog(){
         this.setState({ validation : { emptyTaskNameWarning: false }});
+    }
+
+    showCurrentTime(unitTime){
+        return moment(unitTime).format('HH:mm:ss');
     }
 
     render() {
@@ -108,7 +105,7 @@ class OpsComponent extends React.Component {
             <TextField id="taskName" type="text" value={this.state.taskName} onChange={(e)=>this.handleTaskNameChange(e)}  />
 
             <Paper circle={true} style={paperStyle}>
-                <h1 style={currentTimeStyle}>{this.state.currTime}</h1>
+                <h1 style={currentTimeStyle}>{this.showCurrentTime(this.state.currTime)}</h1>
             </Paper>
 
             <RaisedButton onClick={ () => this.clockStatusToggle() }>{ this.state.status ? 'STOP' : 'START' }</RaisedButton>

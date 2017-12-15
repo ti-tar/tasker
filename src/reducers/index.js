@@ -14,8 +14,6 @@ export default (state = {}, action ) => {
             let newTaskCounter = state.taskCounter + 1;
             let newTask = {...action.task, id: newTaskCounter};
 
-            console.log(newTask);
-
             let newState1 = {...state, taskCounter: newTaskCounter, tasks: [...state.tasks, newTask]};
 
             // TODO сделать через saga

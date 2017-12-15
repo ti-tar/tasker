@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Table, TableHeader, TableBody, TableRow, TableHeaderColumn, TableRowColumn, RaisedButton } from "material-ui";
 import { Link } from 'react-router-dom';
 import { delete_task } from "../actions";
+import moment from 'moment';
 
 
 class TableComponent extends React.Component {
@@ -25,12 +26,13 @@ class TableComponent extends React.Component {
 
                 <TableBody>
                     {
-                        this.props.tasks.map( (tr, index) =>
-                            <TableRow key={index}>
+                        this.props.tasks.map( (tr, index) => {
+                            console.log(tr);
+                            return <TableRow key={index}>
                                 <TableRowColumn>{tr.id}</TableRowColumn>
                                 <TableRowColumn>{tr.name_of_tasks}</TableRowColumn>
-                                <TableRowColumn>{tr.time_start}</TableRowColumn>
-                                <TableRowColumn>{tr.time_end}</TableRowColumn>
+                                <TableRowColumn>{moment(tr.time_start).format('Do YYYY, HH:mm:ss')}</TableRowColumn>
+                                <TableRowColumn>{moment(tr.time_end).format('Do YYYY, HH:mm:ss')}</TableRowColumn>
                                 <TableRowColumn>{tr.time_spend}</TableRowColumn>
                                 <TableRowColumn>
                                     <Link to={{ pathname: '/info/' + tr.id }}><RaisedButton>INFO</RaisedButton></Link>
@@ -38,7 +40,7 @@ class TableComponent extends React.Component {
                                 <TableRowColumn>
                                     <RaisedButton onClick={ () => this.props.taskDelete(tr.id) }>DELETE</RaisedButton>
                                 </TableRowColumn>
-                            </TableRow>
+                            </TableRow>}
                         )
                     }
                 </TableBody>
