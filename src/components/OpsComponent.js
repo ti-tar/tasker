@@ -1,10 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
-
 import { end_task } from '../actions';
-
 import { pink500 } from 'material-ui/styles/colors'
-
 import { TextField , RaisedButton , Paper, Dialog, FlatButton } from "material-ui";
 
 
@@ -25,7 +22,7 @@ const paperStyle = {
 };
 
 
-class MainContainer extends React.Component {
+class OpsComponent extends React.Component {
     constructor(args) {
         super(args);
         this.state = args;
@@ -120,7 +117,6 @@ class MainContainer extends React.Component {
     }
 }
 
-
 const mapStateToProps = (state, ownProps) => {
     return state;
 };
@@ -133,4 +129,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(OpsComponent);

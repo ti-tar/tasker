@@ -1,38 +1,57 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { Switch, Route} from 'react-router-dom';
 
+import IndexContainer from "./containers/IndexContainer";
+import InfoContainer from "./containers/InfoContainer";
 
-import bro3Theme from './bro3Theme'
-
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
-import MainContainer from "./containers/MainContainer";
-import TableContainer from "./containers/TableContainer";
-import ChartComponent from "./components/ChartComponent";
 
 /*
+* Страница 1 общая
 * Три компонента
-*   Main
+*   Ops
 *     название таски
 *     поле ввода
 *     циферблат
 *     кнопки управления временем и локалсторажем
 *   Table
 *   Chart
+*
+* Страница 2 инфо
+*   один контейнер
+*   InfoContainer
 */
+
+/*
+ <OpsContainer />
+ <TableContainer />
+ <ChartComponent />
+* */
+
+
+/*
+ <header>
+ <h1>here is the header of the page</h1>
+ <nav>
+ <Link to="/" />
+ </nav>
+ </header>
+* */
+
+class Main extends React.Component{
+    render(){
+        return <main>
+            <Switch>
+                <Route exact path="/" component={IndexContainer}  />
+                <Route path="/info/:task_id" component={InfoContainer}  />
+            </Switch>
+        </main>
+    }
+}
 
 class App extends React.Component {
     render() {
         return (
-            <BrowserRouter>
-                <MuiThemeProvider muiTheme={bro3Theme}>
-                    <main>
-                        <MainContainer />
-                        <TableContainer />
-                        <ChartComponent />
-                    </main>
-                </MuiThemeProvider>
-            </BrowserRouter>
+            <Main />
         );
     }
 }

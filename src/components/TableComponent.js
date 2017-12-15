@@ -1,16 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import { Table, TableHeader, TableBody, TableRow, TableHeaderColumn, TableRowColumn, RaisedButton } from "material-ui";
-
+import { Link } from 'react-router-dom';
 import { delete_task } from "../actions";
 
 
-class TableContainer extends React.Component {
-
-    taskInfo(e, id){
-        console.log(`taskInfo ${id}`);
-    }
+class TableComponent extends React.Component {
 
     render() {
         return <section>
@@ -38,7 +33,7 @@ class TableContainer extends React.Component {
                                 <TableRowColumn>{tr.time_end}</TableRowColumn>
                                 <TableRowColumn>{tr.time_spend}</TableRowColumn>
                                 <TableRowColumn>
-                                    <RaisedButton onClick={ (e, td) => this.taskInfo(e, tr.id) }>INFO</RaisedButton>
+                                    <Link to={{ pathname: '/info/' + tr.id }}><RaisedButton>INFO</RaisedButton></Link>
                                 </TableRowColumn>
                                 <TableRowColumn>
                                     <RaisedButton onClick={ () => this.props.taskDelete(tr.id) }>DELETE</RaisedButton>
@@ -67,4 +62,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TableContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(TableComponent);
