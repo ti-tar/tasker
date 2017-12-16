@@ -13,7 +13,7 @@ import './index.css';
 import App from './App';
 
 import reducer from './reducers';
-import { initialState } from './initialState';
+import initialState from './initialState';
 
 import bro3Theme from './bro3Theme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -30,8 +30,6 @@ let store = createStore(
 );
 
 sagaMiddleware.run(helloSaga);
-
-
 
 render(
     <Provider store={store}>

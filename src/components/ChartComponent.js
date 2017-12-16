@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import {BarChart, Bar, XAxis, YAxis, Legend} from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Legend } from 'recharts';
 
 
 class ChartComponent extends React.Component {

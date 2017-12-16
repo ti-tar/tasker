@@ -27,13 +27,20 @@ class TableComponent extends React.Component {
                 <TableBody>
                     {
                         this.props.tasks.map( (tr, index) => {
-                            console.log(tr);
                             return <TableRow key={index}>
                                 <TableRowColumn>{tr.id}</TableRowColumn>
                                 <TableRowColumn>{tr.name_of_tasks}</TableRowColumn>
-                                <TableRowColumn>{moment(tr.time_start).format('Do YYYY, HH:mm:ss')}</TableRowColumn>
-                                <TableRowColumn>{moment(tr.time_end).format('Do YYYY, HH:mm:ss')}</TableRowColumn>
-                                <TableRowColumn>{tr.time_spend}</TableRowColumn>
+                                <TableRowColumn>
+                                    {moment(tr.time_start).format('Do YYYY,')}
+                                    <br/>
+                                    {moment(tr.time_start).format('HH:mm:ss')}
+                                </TableRowColumn>
+                                <TableRowColumn>
+                                    {moment(tr.time_end).format('Do YYYY,')}
+                                    <br/>
+                                    {moment(tr.time_end).format('HH:mm:ss')}
+                                </TableRowColumn>
+                                <TableRowColumn>{tr.time_end - tr.time_start}</TableRowColumn>
                                 <TableRowColumn>
                                     <Link to={{ pathname: '/info/' + tr.id }}><RaisedButton>INFO</RaisedButton></Link>
                                 </TableRowColumn>

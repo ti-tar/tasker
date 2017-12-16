@@ -1,4 +1,4 @@
-import { localStorageKey } from '../initialState';
+import config from "../config";
 
 export default (state = {}, action ) => {
 
@@ -17,7 +17,7 @@ export default (state = {}, action ) => {
             let newState1 = {...state, taskCounter: newTaskCounter, tasks: [...state.tasks, newTask]};
 
             // TODO сделать через saga
-            localStorage.setItem(localStorageKey, JSON.stringify(newState1));
+            localStorage.setItem(config.localStorageKey, JSON.stringify(newState1));
 
             return newState1;
 
@@ -25,7 +25,7 @@ export default (state = {}, action ) => {
             let newState = {...state, tasks: state.tasks.filter(task=>task.id !== action.id)};
 
             // TODO сделать через saga
-            localStorage.setItem(localStorageKey, JSON.stringify(newState));
+            localStorage.setItem(config.localStorageKey, JSON.stringify(newState));
 
             return newState;
 

@@ -1,18 +1,10 @@
-/*
-
- localStorage.setItem(k.v)
- localStorage.getItem(k)
- localStorage.removeItem(k)
-
-*/
-
 // TODO запрашивать localStorage через redux-saga
 
-export const localStorageKey = 'blablablatasks';
+import config from './config';
 
-if ( ! localStorage.getItem(localStorageKey) ) {
+if ( ! localStorage.getItem(config.localStorageKey) ) {
 
-    localStorage.setItem(localStorageKey, JSON.stringify(
+    localStorage.setItem(config.localStorageKey, JSON.stringify(
         {
             status : 0,
             taskName : "Enter the Task Name",
@@ -62,4 +54,4 @@ if ( ! localStorage.getItem(localStorageKey) ) {
     ));
 }
 
-export const initialState = JSON.parse(localStorage.getItem(localStorageKey));
+export default JSON.parse(localStorage.getItem(config.localStorageKey));

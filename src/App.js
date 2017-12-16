@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route} from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import IndexContainer from "./containers/IndexContainer";
 import InfoContainer from "./containers/InfoContainer";
@@ -20,22 +20,6 @@ import InfoContainer from "./containers/InfoContainer";
 *   один контейнер
 *   InfoContainer
 */
-
-/*
- <OpsContainer />
- <TableContainer />
- <ChartComponent />
-* */
-
-
-/*
- <header>
- <h1>here is the header of the page</h1>
- <nav>
- <Link to="/" />
- </nav>
- </header>
-* */
 
 class Main extends React.Component{
     render(){
