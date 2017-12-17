@@ -40,7 +40,7 @@ class TableComponent extends React.Component {
                                     <br/>
                                     {moment(tr.time_end).format('HH:mm:ss')}
                                 </TableRowColumn>
-                                <TableRowColumn>{tr.time_end - tr.time_start}</TableRowColumn>
+                                <TableRowColumn>{((tr.time_end - tr.time_start) / 1000)/60}</TableRowColumn>
                                 <TableRowColumn>
                                     <Link to={{ pathname: '/info/' + tr.id }}><RaisedButton>INFO</RaisedButton></Link>
                                 </TableRowColumn>

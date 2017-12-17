@@ -1,26 +1,49 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { BarChart, Bar, XAxis, YAxis, Legend } from 'recharts';
+import moment from 'moment';
 
 
 class ChartComponent extends React.Component {
 
     getChartData(){
-        let chartData = [];
-        console.log(this.props);
 
-        for (let i in this.props.tasks){
-            chartData.push({
-                name: this.props.tasks[i].id,
-                tv: (this.props.tasks[i].time_end - this.props.tasks[i].time_start) / 1000
-            });
-        }
+        let currentDay = moment().format('D');
 
-        return chartData;
+        let chartMonth = moment().format('M');
+        let chartYear = moment().format('YYYY');
+
+        let currMonthChartData = (new Array(parseInt(currentDay))).fill({}).map((v, index) => {
+
+            let day = index + 1;
+
+            let dayStartMoment = moment(`${chartYear}-${chartMonth}-${day}`).valueOf();
+            let dayEndMoment = dayStartMoment + (86400 * 1000);
+
+            let spentTimeDuringDay = 0;
+
+            for (let i in this.props.tasks) {
+                if (
+                        ( dayStartMoment < this.props.tasks[i].time_start && this.props.tasks[i].time_start < dayEndMoment )
+                    ||
+                        ( dayStartMoment < this.props.tasks[i].time_end && this.props.tasks[i].time_end < dayEndMoment)
+                ) {
+                    let taskEndTime = this.props.tasks[i].time_end < dayEndMoment ? this.props.tasks[i].time_end : dayEndMoment;
+                    spentTimeDuringDay += taskEndTime - this.props.tasks[i].time_start;
+                }
+            }
+
+            return {
+                name: day,
+                tv: spentTimeDuringDay / 1000
+            }
+        });
+
+        return currMonthChartData;
     }
 
     legendText(){
-        return 'Minutes in these hours';
+        return `Minutes in these days`;
     }
 
     render(){
