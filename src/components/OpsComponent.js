@@ -1,7 +1,12 @@
 import React from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { end_task } from '../actions';
+import {
+    start_task,
+    end_task,
+    saga_set_fake_data,
+    set_local_storage_state
+} from '../actions';
 import { pink500 } from 'material-ui/styles/colors'
 import { TextField , RaisedButton , Paper, Dialog, FlatButton } from "material-ui";
 
@@ -41,7 +46,7 @@ class OpsComponent extends React.Component {
 
     startRunning(){
 
-        if (this.state.taskName === "Enter the Task Name"  || ! this.state.taskName){
+        if ( ! this.state.taskName ){
             this.setState({validation : {emptyTaskNameWarning: true }});
             return false;
         }
@@ -51,9 +56,23 @@ class OpsComponent extends React.Component {
             startDate: (new Date()).valueOf()
         });
 
+
         this.timerId = setInterval(() => {
             this.setState({ currTime : (new Date()).valueOf() });
         }, 500)
+
+        /*
+        * values of `taskCounter` and `task.id` we'll define in reducer
+        */
+
+        let taskBoilerplate = {
+            name_of_tasks: this.state.taskName,
+            time_start: (new Date()).valueOf(),
+            time_end: null,
+            status: 0,
+        };
+
+        this.props.onStartTask(taskBoilerplate);
     }
 
     stopRunning(){
@@ -61,14 +80,7 @@ class OpsComponent extends React.Component {
         this.setState({status:0});
         clearInterval(this.timerId);
 
-        let finishedTask = {
-            name_of_tasks: this.state.taskName,
-            time_start: this.state.startDate,
-            time_end: (new Date()).valueOf(),
-            status: 1,
-        };
-
-        this.props.onEndTask(finishedTask);
+        this.props.onEndTask();
 
     }
 
@@ -102,26 +114,35 @@ class OpsComponent extends React.Component {
 
             <p className="tack_title">Name of your task</p>
 
-            <TextField id="taskName" type="text" value={this.state.taskName} onChange={(e)=>this.handleTaskNameChange(e)}  />
+            <TextField id="taskName" type="text" value={this.state.taskName} hintText="Enter the Task Name" onChange={(e)=>this.handleTaskNameChange(e)}  />
 
             <Paper circle={true} style={paperStyle}>
                 <h1 style={currentTimeStyle}>{this.showCurrentTime(this.state.currTime)}</h1>
             </Paper>
 
             <RaisedButton onClick={ () => this.clockStatusToggle() }>{ this.state.status ? 'STOP' : 'START' }</RaisedButton>
+            <br />
+            <br />
+            <RaisedButton onClick={ () => this.props.onSetFakeData() }>SET FAKE DATA</RaisedButton>
 
         </section>;
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return state;
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        onEndTask: (task) => {
-            dispatch(end_task(task));
+        onStartTask: (task) => {
+            dispatch(start_task(task), set_local_storage_state());
+        },
+        onEndTask: () => {
+            dispatch(end_task(), set_local_storage_state());
+        },
+        onSetFakeData: () => {
+            dispatch(saga_set_fake_data());
         }
     }
 };

@@ -13,7 +13,7 @@ class ChartComponent extends React.Component {
         let chartMonth = moment().format('M');
         let chartYear = moment().format('YYYY');
 
-        let currMonthChartData = (new Array(parseInt(currentDay))).fill({}).map((v, index) => {
+        let currMonthChartData = (new Array(parseInt(currentDay, 10))).fill({}).map((v, index) => {
 
             let day = index + 1;
 
@@ -43,7 +43,7 @@ class ChartComponent extends React.Component {
     }
 
     legendText(){
-        return `Minutes in these days`;
+        return `Hours in these days`;
     }
 
     render(){

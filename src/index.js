@@ -5,9 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-import { put } from 'redux-saga/effects'
-import helloSaga from './sagas';
 
+import watchLocalStorage from './sagas';
 
 import './index.css';
 import App from './App';
@@ -20,6 +19,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import registerServiceWorker from './registerServiceWorker';
 
+
+
 const sagaMiddleware = createSagaMiddleware();
 
 let store = createStore(
@@ -29,7 +30,7 @@ let store = createStore(
     window.devToolsExtension && window.devToolsExtension(),
 );
 
-sagaMiddleware.run(helloSaga);
+sagaMiddleware.run(watchLocalStorage);
 
 render(
     <Provider store={store}>

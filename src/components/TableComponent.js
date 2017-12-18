@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { Table, TableHeader, TableBody, TableRow, TableHeaderColumn, TableRowColumn, RaisedButton } from "material-ui";
 import { Link } from 'react-router-dom';
 import { delete_task } from "../actions";
+
+import { lightBlue50, green50 } from 'material-ui/styles/colors';
+
 import moment from 'moment';
 
 
@@ -18,7 +21,7 @@ class TableComponent extends React.Component {
                         <TableHeaderColumn>Name of tasks</TableHeaderColumn>
                         <TableHeaderColumn>Time start</TableHeaderColumn>
                         <TableHeaderColumn>Time end</TableHeaderColumn>
-                        <TableHeaderColumn>Time spend</TableHeaderColumn>
+                        <TableHeaderColumn>Time spend, <br/>hours </TableHeaderColumn>
                         <TableHeaderColumn>Info</TableHeaderColumn>
                         <TableHeaderColumn>Delete</TableHeaderColumn>
                     </TableRow>
@@ -26,8 +29,8 @@ class TableComponent extends React.Component {
 
                 <TableBody>
                     {
-                        this.props.tasks.map( (tr, index) => {
-                            return <TableRow key={index}>
+                        this.props.tasks.reverse().map( (tr, index) => {
+                            return <TableRow key={index} style={ tr.status === 1 ? {backgroundColor: lightBlue50} : {backgroundColor: green50}}>
                                 <TableRowColumn>{tr.id}</TableRowColumn>
                                 <TableRowColumn>{tr.name_of_tasks}</TableRowColumn>
                                 <TableRowColumn>
@@ -36,11 +39,11 @@ class TableComponent extends React.Component {
                                     {moment(tr.time_start).format('HH:mm:ss')}
                                 </TableRowColumn>
                                 <TableRowColumn>
-                                    {moment(tr.time_end).format('Do YYYY,')}
+                                    { tr.time_end ? moment(tr.time_end).format('Do YYYY,') : ""}
                                     <br/>
-                                    {moment(tr.time_end).format('HH:mm:ss')}
+                                    { tr.time_end ? moment(tr.time_end).format('HH:mm:ss') : ""}
                                 </TableRowColumn>
-                                <TableRowColumn>{((tr.time_end - tr.time_start) / 1000)/60}</TableRowColumn>
+                                <TableRowColumn>{ tr.time_end ? parseInt((tr.time_end - tr.time_start) / 3600000)  : ""}</TableRowColumn>
                                 <TableRowColumn>
                                     <Link to={{ pathname: '/info/' + tr.id }}><RaisedButton>INFO</RaisedButton></Link>
                                 </TableRowColumn>

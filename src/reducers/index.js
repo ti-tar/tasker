@@ -4,22 +4,37 @@ export default (state = {}, action ) => {
 
     switch (action.type){
         case 'START_TASK':
-            console.log('START_TASK');
-            return {...state};
-
-        case 'END_TASK':
-            console.log('END_TASK');
-            console.log(action.task);
+            config.debug && console.log('START_TASK');
 
             let newTaskCounter = state.taskCounter + 1;
+
             let newTask = {...action.task, id: newTaskCounter};
 
-            let newState1 = {...state, taskCounter: newTaskCounter, tasks: [...state.tasks, newTask]};
+            let stateWithNewTask = {
+                ...state,
+                taskCounter: newTaskCounter,
+                tasks: [...state.tasks, newTask]
+            };
 
-            // TODO сделать через saga
-            localStorage.setItem(config.localStorageKey, JSON.stringify(newState1));
+            config.debug && console.log(stateWithNewTask);
+            return stateWithNewTask;
 
-            return newState1;
+        case 'END_TASK':
+            config.debug && console.log('END_TASK');
+
+            let copyState = { ...state };
+
+            copyState.tasks[copyState.tasks.length -1].status = 1;
+            copyState.tasks[copyState.tasks.length -1].time_end = (new Date()).valueOf();
+
+            config.debug && console.log(copyState);
+
+            return copyState;
+
+
+        case 'SET_FAKE_DATA_TO_STATE':
+            config.debug && console.log('reducer: SET_FAKE_DATA_TO_STATE');
+            return { ...state, ...action.fakeState};
 
         case 'DELETE_TASK':
             let newState = {...state, tasks: state.tasks.filter(task=>task.id !== action.id)};
@@ -29,11 +44,23 @@ export default (state = {}, action ) => {
 
             return newState;
 
-        case 'SAGA_ACTION':
+        case 'GET_LOCAL_STORAGE_STATE':
+            config.debug && console.log(`reducer: GET_LOCALSTORAGE_STATE` );
+
+            if (localStorage.getItem(config.localStorageKey)){
+                const storageState = JSON.parse(localStorage.getItem(config.localStorageKey));
+                config.debug && console.log({ ...state, ...storageState });
+                return { ...state, ...storageState };
+            }
+
+            return { ...state  };
+
+        case 'SET_LOCAL_STORAGE_STATE':
+            config.debug && console.log('reducer: SET_LOCAL_STORAGE_STATE');
+            localStorage.setItem(config.localStorageKey, JSON.stringify(state));
             return { ...state };
 
         default:
             return state;
     }
-
 };

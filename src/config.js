@@ -1,6 +1,5 @@
-const config = {
+export default {
     localStorageKey: "blablablatasks",
-    locale: 'en'
+    locale: 'en',
+    debug: true
 };
-
-export default config;
