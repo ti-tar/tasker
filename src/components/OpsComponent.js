@@ -2,11 +2,10 @@ import React from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
 import {
-    start_task,
-    end_task,
-    saga_set_fake_data,
-    set_local_storage_state
-} from '../actions';
+    saga_start_task,
+    saga_end_task,
+    saga_set_fake_data
+} from '../actions/saga';
 import { pink500 } from 'material-ui/styles/colors'
 import { TextField , RaisedButton , Paper, Dialog, FlatButton } from "material-ui";
 
@@ -136,10 +135,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onStartTask: (task) => {
-            dispatch(start_task(task), set_local_storage_state());
+            dispatch(saga_start_task(task));
         },
         onEndTask: () => {
-            dispatch(end_task(), set_local_storage_state());
+            dispatch(saga_end_task());
         },
         onSetFakeData: () => {
             dispatch(saga_set_fake_data());

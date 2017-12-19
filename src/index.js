@@ -5,28 +5,33 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-
 import watchLocalStorage from './sagas';
+import reducer from './reducers';
+import { logger } from 'redux-logger';
 
 import './index.css';
 import App from './App';
-
-import reducer from './reducers';
 import initialState from './initialState';
-
 import bro3Theme from './bro3Theme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
 import registerServiceWorker from './registerServiceWorker';
 
+import config from './config';
 
+// https://github.com/evgenyrodionov/redux-logger#recipes
+const middlewares = [];
+if (config.debug && process.env.NODE_ENV === 'development'){
+    middlewares.push(logger);
+}
 
 const sagaMiddleware = createSagaMiddleware();
+
+middlewares.push(sagaMiddleware);
 
 let store = createStore(
     reducer,
     initialState,
-    applyMiddleware(sagaMiddleware),
+    applyMiddleware(...middlewares),
     window.devToolsExtension && window.devToolsExtension(),
 );
 

@@ -17,7 +17,7 @@ class ChartComponent extends React.Component {
 
             let day = index + 1;
 
-            let dayStartMoment = moment(`${chartYear}-${chartMonth}-${day}`).valueOf();
+            let dayStartMoment = moment(`${chartYear}-${chartMonth}-${day}`, "YYYY-DD-MM").valueOf();
             let dayEndMoment = dayStartMoment + (86400 * 1000);
 
             let spentTimeDuringDay = 0;
@@ -35,7 +35,7 @@ class ChartComponent extends React.Component {
 
             return {
                 name: day,
-                tv: spentTimeDuringDay / 1000
+                tv: spentTimeDuringDay / (60*60* 1000)
             }
         });
 

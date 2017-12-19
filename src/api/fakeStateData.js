@@ -13,7 +13,7 @@ for ( let i = 0; i < moment().format("D"); i++){
         continue;
     }
 
-    let min = moment(`${moment().format('YYYY')}-${moment().format('M')}-${i+1}`).valueOf();
+    let min = moment(`${moment().format('YYYY')}-${moment().format('M')}-${i+1}`, "YYYY-DD-MM").valueOf();
     let max = min + (43200*1000);
     let start = Math.random() * (max - min) + min;
     let end = start + (Math.random()*(43200*1000) + (43200*1000));
