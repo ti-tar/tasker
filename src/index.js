@@ -8,6 +8,7 @@ import createSagaMiddleware from 'redux-saga';
 import watchLocalStorage from './sagas';
 import reducer from './reducers';
 import { logger } from 'redux-logger';
+import moment from 'moment';
 
 import './index.css';
 import App from './App';
@@ -23,6 +24,8 @@ const middlewares = [];
 if (config.debug && process.env.NODE_ENV === 'development'){
     middlewares.push(logger);
 }
+
+moment().locale(config.locale);
 
 const sagaMiddleware = createSagaMiddleware();
 

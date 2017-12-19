@@ -1,5 +1,5 @@
 export default {
     localStorageKey: "blablablatasks",
-    locale: 'en',
+    locale: 'ua',
     debug: true
 };
