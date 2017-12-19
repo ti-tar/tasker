@@ -21,7 +21,7 @@ class TableComponent extends React.Component {
                         <TableHeaderColumn>Name of tasks</TableHeaderColumn>
                         <TableHeaderColumn>Time start</TableHeaderColumn>
                         <TableHeaderColumn>Time end</TableHeaderColumn>
-                        <TableHeaderColumn>Time spend, <br/>hours </TableHeaderColumn>
+                        <TableHeaderColumn>Spent time, <br/>hours </TableHeaderColumn>
                         <TableHeaderColumn>Info</TableHeaderColumn>
                         <TableHeaderColumn>Delete</TableHeaderColumn>
                     </TableRow>
@@ -29,7 +29,7 @@ class TableComponent extends React.Component {
 
                 <TableBody>
                     {
-                        this.props.tasks.reverse().map( (tr, index) => {
+                        this.props.tasks.map( (tr, index) => {
                             return <TableRow key={index} style={ tr.status === 1 ? {backgroundColor: lightBlue50} : {backgroundColor: green50}}>
                                 <TableRowColumn>{tr.id}</TableRowColumn>
                                 <TableRowColumn>{tr.name_of_tasks}</TableRowColumn>

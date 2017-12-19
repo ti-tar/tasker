@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import fakeStateData from '../api/fakeStateData';
+import getFakeState from '../api/fakeStateData';
 import config from '../config';
 
 import {
@@ -33,7 +33,7 @@ function makeCall(data = {}) {
 
 function* setFakeDataToStateAndLocalStorage() {
     config.debug && console.log('setFakeDataToStateAndLocalStorage clicked');
-    const fakeState = yield call(makeCall, fakeStateData);
+    const fakeState = yield call(makeCall, getFakeState());
     yield put(reducer_set_fake_data(fakeState));
     yield put(reducer_set_local_storage_state());
 }

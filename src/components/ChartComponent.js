@@ -8,16 +8,16 @@ class ChartComponent extends React.Component {
 
     getChartData(){
 
-        let currentDay = moment().format('D');
+        let currentDay = moment().format('DD');
 
-        let chartMonth = moment().format('M');
+        let chartMonth = moment().format('MM');
         let chartYear = moment().format('YYYY');
 
         let currMonthChartData = (new Array(parseInt(currentDay, 10))).fill({}).map((v, index) => {
 
             let day = index + 1;
 
-            let dayStartMoment = moment(`${chartYear}-${chartMonth}-${day}`, "YYYY-DD-MM").valueOf();
+            let dayStartMoment = moment(`${chartYear}-${chartMonth}-${day}`, "YYYY-MM-DD").valueOf();
             let dayEndMoment = dayStartMoment + (86400 * 1000);
 
             let spentTimeDuringDay = 0;
