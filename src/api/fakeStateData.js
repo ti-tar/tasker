@@ -38,7 +38,7 @@ export default () => {
 
     }
 
-    fakeTasks.taskCounter = fakeTasks.tasks.length;
+    fakeTasks.taskCounter = fakeTasks.tasks[fakeTasks.tasks.length-1].id;
 
     config.debug && console.log(fakeTasks);
 

@@ -29,7 +29,8 @@ class ChartComponent extends React.Component {
                         ( dayStartMoment < this.props.tasks[i].time_end && this.props.tasks[i].time_end < dayEndMoment)
                 ) {
                     let taskEndTime = this.props.tasks[i].time_end < dayEndMoment ? this.props.tasks[i].time_end : dayEndMoment;
-                    spentTimeDuringDay += taskEndTime - this.props.tasks[i].time_start;
+                    let taskStartTime = this.props.tasks[i].time_start > dayStartMoment ? this.props.tasks[i].time_start : dayStartMoment;
+                    spentTimeDuringDay += taskEndTime - taskStartTime;
                 }
             }
 

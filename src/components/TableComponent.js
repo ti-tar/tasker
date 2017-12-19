@@ -10,6 +10,10 @@ import moment from 'moment';
 
 
 class TableComponent extends React.Component {
+    constructor(...args){
+        super(...args);
+        console.log(this);
+    }
 
     render() {
         return <section>
@@ -60,7 +64,11 @@ class TableComponent extends React.Component {
     }
 }
 
-const mapStateToProps = s => s;// TODO
+const mapStateToProps = s => {
+    return {
+        tasks: s.tasks
+    }
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {

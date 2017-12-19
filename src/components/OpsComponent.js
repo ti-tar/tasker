@@ -6,14 +6,14 @@ import {
     saga_end_task,
     saga_set_fake_data
 } from '../actions/saga';
-import { pink500 } from 'material-ui/styles/colors'
+import { pink500, blueA200 } from 'material-ui/styles/colors'
 import { TextField , RaisedButton , Paper, Dialog, FlatButton } from "material-ui";
 
 
 const currentTimeStyle = {
     fontSize: `21px`,
     fontStyle: 'normal',
-    color: '#3249c7',
+    color: blueA200,
     paddingTop: '115px'
 };
 

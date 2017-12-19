@@ -10,17 +10,16 @@ import {
 export default (state = {}, action ) => {
 
     switch (action.type){
+
         case REDUCER_START_TASK:
             config.debug && console.log(`reducer: ${action.type}`);
 
             let newTaskCounter = state.taskCounter + 1;
 
-            let newTask = {...action.task, id: newTaskCounter};
-
             let stateWithNewTask = {
                 ...state,
                 taskCounter: newTaskCounter,
-                tasks: [...state.tasks, newTask]
+                tasks: [...state.tasks, {...action.newTask, id: newTaskCounter}]
             };
 
             config.debug && console.log(stateWithNewTask);

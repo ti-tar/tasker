@@ -39,7 +39,7 @@ function* setFakeDataToStateAndLocalStorage() {
 }
 
 function* start_task(action){
-    // отправлем редьюсеру акшн обновления стора
+    // отправляем редьюсеру экшн обновления стора
     yield put(reducer_start_task(action.newTask));
     // сохраняем наш изменненный стор  в лс
     yield put(reducer_set_local_storage_state());
