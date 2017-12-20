@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from 'react-redux';
+import Task from '../models/Task'
 import moment from 'moment';
 import {
-    saga_start_task,
     saga_end_task,
     saga_set_fake_data
 } from '../actions/saga';
@@ -31,11 +31,18 @@ class OpsComponent extends React.Component {
 
     constructor(args) {
         super(args);
-        this.state = args;
         this.timerId = null;
+
+        this.state = {
+            status : 0,
+            currentSecondsCounter: 0,
+            emptyTaskNameWarning: false,
+            taskName: ''
+        };
     }
 
     clockStatusToggle(){
+        console.log(this.state.status);
         if (this.state.status === 1){
             this.stopRunning()
         } else {
@@ -44,43 +51,35 @@ class OpsComponent extends React.Component {
     }
 
     startRunning(){
-
-        if ( ! this.state.taskName ){
-            this.setState({validation : {emptyTaskNameWarning: true }});
-            return false;
-        }
-
-        this.setState({
-            status:1,
-            startDate: (new Date()).valueOf()
-        });
-
+        this.setState({status: 1});
+        this.startTime = moment().valueOf();
 
         this.timerId = setInterval(() => {
-            this.setState({ currTime : (new Date()).valueOf() });
-        }, 500)
-
-        /*
-        * values of `taskCounter` and `task.id` we'll define in reducer
-        */
-
-        let taskBoilerplate = {
-            name_of_tasks: this.state.taskName,
-            time_start: (new Date()).valueOf(),
-            time_end: null,
-            status: 0,
-        };
-
-        this.props.onStartTask(taskBoilerplate);
+            this.setState({ currentSecondsCounter : this.state.currentSecondsCounter + 1 });
+            console.log(this.state.currentSecondsCounter);
+        }, 1000)
     }
 
     stopRunning(){
 
-        this.setState({status:0});
+        if ( ! this.state.taskName ){
+            this.setState({emptyTaskNameWarning: true });
+            return;
+        }
+
         clearInterval(this.timerId);
+        this.endTime = moment().valueOf();
 
-        this.props.onEndTask();
+        // тут мы отправляем без id
+        // id и tasksCounter присвоится ему в редьюсере
+        this.props.onEndTask({
+            ...Task,
+            taskName: this.state.taskName,
+            startTime: this.startTime,
+            endTime: this.endTime
+        });
 
+        this.setState({status: 0});
     }
 
     handleTaskNameChange(e){
@@ -88,11 +87,12 @@ class OpsComponent extends React.Component {
     }
 
     hideWarningDialog(){
-        this.setState({ validation : { emptyTaskNameWarning: false }});
+        this.setState({ emptyTaskNameWarning: false });
     }
 
-    showCurrentTime(unitTime){
-        return moment(unitTime).format('HH:mm:ss');
+    showCurrentTime(){
+        return this.state.currentSecondsCounter;
+        //return moment().format('s');
     }
 
     render() {
@@ -107,7 +107,7 @@ class OpsComponent extends React.Component {
 
         return <section>
 
-            <Dialog open={this.state.validation.emptyTaskNameWarning} titleStyle={titleStyle} actions={buttons} title="Empty task name!">
+            <Dialog open={this.state.emptyTaskNameWarning} titleStyle={titleStyle} actions={buttons} title="Empty task name!">
                 You've missed to fill the task name.
             </Dialog>
 
@@ -116,7 +116,7 @@ class OpsComponent extends React.Component {
             <TextField id="taskName" type="text" value={this.state.taskName} hintText="Enter the Task Name" onChange={(e)=>this.handleTaskNameChange(e)}  />
 
             <Paper circle={true} style={paperStyle}>
-                <h1 style={currentTimeStyle}>{this.showCurrentTime(this.state.currTime)}</h1>
+                <h1 style={currentTimeStyle}>{this.showCurrentTime()}</h1>
             </Paper>
 
             <RaisedButton onClick={ () => this.clockStatusToggle() }>{ this.state.status ? 'STOP' : 'START' }</RaisedButton>
@@ -134,11 +134,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onStartTask: (task) => {
-            dispatch(saga_start_task(task));
-        },
-        onEndTask: () => {
-            dispatch(saga_end_task());
+        onEndTask: (newTask) => {
+            dispatch(saga_end_task(newTask));
         },
         onSetFakeData: () => {
             dispatch(saga_set_fake_data());

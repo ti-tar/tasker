@@ -1,9 +1,9 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import getFakeState from '../api/fakeStateData';
 import config from '../config';
+import getByKey from '../api/localStorage';
+import getFakeState from '../api/fakeStateData';
 
 import {
-    reducer_start_task,
     reducer_end_task,
     reducer_get_local_storage_state,
     reducer_set_fake_data,
@@ -12,11 +12,26 @@ import {
 } from '../actions/reducer';
 
 import {
-    SAGA_START_TASK,
     SAGA_END_TASK,
     SAGA_DELETE_TASK,
     SAGA_SET_FAKE_DATA_TO_STATE
 } from '../actions/saga';
+
+
+
+function getInitData(key) {
+
+    return (new Promise((resolve) => {
+        //типа асинхронность
+        setTimeout(() => {
+            resolve(getByKey(key))
+        }, 500);
+
+    })).then(
+        (data) => {
+            return data;
+        });
+}
 
 function makeCall(data = {}) {
     return (new Promise((resolve) => {
@@ -38,16 +53,9 @@ function* setFakeDataToStateAndLocalStorage() {
     yield put(reducer_set_local_storage_state());
 }
 
-function* start_task(action){
-    // отправляем редьюсеру экшн обновления стора
-    yield put(reducer_start_task(action.newTask));
-    // сохраняем наш изменненный стор  в лс
-    yield put(reducer_set_local_storage_state());
-}
-
-function* end_task(){
+function* end_task(action){
     // путим редьюмеру экшн завершения таски
-    yield put(reducer_end_task());
+    yield put(reducer_end_task(action.newTask));
     // сохраняем стор с завершенной таской в лс
     yield put(reducer_set_local_storage_state());
 }
@@ -56,14 +64,17 @@ function* delete_task(action) {
     yield put(reducer_delete_task(action.id));
     yield put(reducer_set_local_storage_state());
 }
+
 export default function* watchLocalStorage () {
     config.debug && console.log('saga watchLocalStorage init');
 
-    // при инициализации скрипта пустой store меняем на store из локалсторджа, если он там есть
-    yield put(reducer_get_local_storage_state());
+    // при инициализации скрипта берем store из локалсторджа, если он там есть ...
+    let localStorageState = yield call(getInitData, config.localStorageKey);
+    localStorageState = localStorageState ? JSON.parse(localStorageState) : {};
+    // .. и мерждим к initialState
+    yield put(reducer_get_local_storage_state(localStorageState));
 
     yield takeEvery(SAGA_SET_FAKE_DATA_TO_STATE, setFakeDataToStateAndLocalStorage);
-    yield takeEvery(SAGA_START_TASK, start_task);
     yield takeEvery(SAGA_END_TASK, end_task);
     yield takeEvery(SAGA_DELETE_TASK, delete_task);
 }

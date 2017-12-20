@@ -4,7 +4,7 @@ import { Table, TableHeader, TableBody, TableRow, TableHeaderColumn, TableRowCol
 import { Link } from 'react-router-dom';
 import { saga_delete_task } from "../actions/saga";
 
-import { lightBlue50, green50 } from 'material-ui/styles/colors';
+import { lightBlue50 } from 'material-ui/styles/colors';
 
 import moment from 'moment';
 
@@ -34,20 +34,20 @@ class TableComponent extends React.Component {
                 <TableBody>
                     {
                         this.props.tasks.map( (tr, index) => {
-                            return <TableRow key={index} style={ tr.status === 1 ? {backgroundColor: lightBlue50} : {backgroundColor: green50}}>
+                            return <TableRow key={index} style={{ backgroundColor: lightBlue50 }}>
                                 <TableRowColumn>{tr.id}</TableRowColumn>
-                                <TableRowColumn>{tr.name_of_tasks}</TableRowColumn>
+                                <TableRowColumn>{tr.taskName}</TableRowColumn>
                                 <TableRowColumn>
-                                    {moment(tr.time_start).format('Do YYYY,')}
+                                    {moment(tr.startTime).format('Do YYYY,')}
                                     <br/>
-                                    {moment(tr.time_start).format('HH:mm:ss')}
+                                    {moment(tr.startTime).format('HH:mm:ss')}
                                 </TableRowColumn>
                                 <TableRowColumn>
-                                    { tr.time_end ? moment(tr.time_end).format('Do YYYY,') : ""}
+                                    { tr.endTime ? moment(tr.endTime).format('Do YYYY,') : ""}
                                     <br/>
-                                    { tr.time_end ? moment(tr.time_end).format('HH:mm:ss') : ""}
+                                    { tr.endTime ? moment(tr.endTime).format('HH:mm:ss') : ""}
                                 </TableRowColumn>
-                                <TableRowColumn>{ tr.time_end ? parseInt((tr.time_end - tr.time_start) / 3600000, 10)  : ""}</TableRowColumn>
+                                <TableRowColumn>{ tr.endTime ? parseInt((tr.endTime - tr.startTime) / 3600000, 10)  : ""}</TableRowColumn>
                                 <TableRowColumn>
                                     <Link to={{ pathname: '/info/' + tr.id }}><RaisedButton>INFO</RaisedButton></Link>
                                 </TableRowColumn>

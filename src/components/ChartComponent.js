@@ -24,12 +24,12 @@ class ChartComponent extends React.Component {
 
             for (let i in this.props.tasks) {
                 if (
-                        ( dayStartMoment < this.props.tasks[i].time_start && this.props.tasks[i].time_start < dayEndMoment )
+                        ( dayStartMoment < this.props.tasks[i].startTime && this.props.tasks[i].startTime < dayEndMoment )
                     ||
-                        ( dayStartMoment < this.props.tasks[i].time_end && this.props.tasks[i].time_end < dayEndMoment)
+                        ( dayStartMoment < this.props.tasks[i].endTime && this.props.tasks[i].endTime < dayEndMoment)
                 ) {
-                    let taskEndTime = this.props.tasks[i].time_end < dayEndMoment ? this.props.tasks[i].time_end : dayEndMoment;
-                    let taskStartTime = this.props.tasks[i].time_start > dayStartMoment ? this.props.tasks[i].time_start : dayStartMoment;
+                    let taskEndTime = this.props.tasks[i].endTime < dayEndMoment ? this.props.tasks[i].endTime : dayEndMoment;
+                    let taskStartTime = this.props.tasks[i].startTime > dayStartMoment ? this.props.tasks[i].startTime : dayStartMoment;
                     spentTimeDuringDay += taskEndTime - taskStartTime;
                 }
             }
@@ -60,4 +60,4 @@ class ChartComponent extends React.Component {
 
 }
 
-export default connect((s)=>{return {tasks:s.tasks.filter(t=>t.status===1)}})(ChartComponent);
+export default connect()(ChartComponent);

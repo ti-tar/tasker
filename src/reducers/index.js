@@ -1,6 +1,5 @@
 import config from "../config";
 import {
-    REDUCER_START_TASK,
     REDUCER_END_TASK,
     REDUCER_DELETE_TASK,
     REDUCER_GET_LOCAL_STORAGE_STATE,
@@ -11,32 +10,18 @@ export default (state = {}, action ) => {
 
     switch (action.type){
 
-        case REDUCER_START_TASK:
-            config.debug && console.log(`reducer: ${action.type}`);
-
-            let newTaskCounter = state.taskCounter + 1;
-
-            let stateWithNewTask = {
-                ...state,
-                taskCounter: newTaskCounter,
-                tasks: [...state.tasks, {...action.newTask, id: newTaskCounter}]
-            };
-
-            config.debug && console.log(stateWithNewTask);
-            return stateWithNewTask;
-
-
         case REDUCER_END_TASK:
             config.debug && console.log(`reducer: ${action.type}`);
 
-            let copyState = { ...state };
+            let newTasksCounter = state.tasksCounter + 1;
 
-            copyState.tasks[copyState.tasks.length -1].status = 1;
-            copyState.tasks[copyState.tasks.length -1].time_end = (new Date()).valueOf();
+            let stateWithNewTask = {
+                ...state,
+                tasksCounter: newTasksCounter,
+                tasks: [...state.tasks, {...action.newTask, id: newTasksCounter}]
+            };
 
-            config.debug && console.log(copyState);
-
-            return copyState;
+            return stateWithNewTask;
 
 
         case REDUCER_DELETE_TASK:
