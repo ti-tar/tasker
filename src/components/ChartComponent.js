@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from 'react-redux';
 import { BarChart, Bar, XAxis, YAxis, Legend } from 'recharts';
 import moment from 'moment';
-import config from "../config";
 
 
 class ChartComponent extends React.Component {
@@ -40,8 +39,6 @@ class ChartComponent extends React.Component {
                 tv: spentTimeDuringHour / (60 * 1000)
             }
         }).reverse();
-
-        config.debug && console.log(curentChartData);
 
         return curentChartData;
     }

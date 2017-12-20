@@ -6,6 +6,7 @@ import {
     saga_end_task,
     saga_set_fake_data
 } from '../actions/saga';
+import { reducer_start_task } from '../actions/reducer';
 import { pink500, blueA200 } from 'material-ui/styles/colors'
 import { TextField , RaisedButton , Paper, Dialog, FlatButton } from "material-ui";
 
@@ -34,7 +35,6 @@ class OpsComponent extends React.Component {
         this.timerId = null;
 
         this.state = {
-            status : 0,
             currentSecondsCounter: 0,
             emptyTaskNameWarning: false,
             taskName: ''
@@ -42,7 +42,7 @@ class OpsComponent extends React.Component {
     }
 
     clockStatusToggle(){
-        if (this.state.status === 1){
+        if (this.props.status === 1){
             this.stopRunning()
         } else {
             this.startRunning()
@@ -50,12 +50,13 @@ class OpsComponent extends React.Component {
     }
 
     startRunning(){
+
+        this.props.onStartTask();
+
         this.setState({status: 1});
         this.startTime = moment().valueOf();
 
-        this.timerId = setInterval(() => {
-            this.setState({ currentSecondsCounter : this.state.currentSecondsCounter + 1 });
-        }, 1000)
+        this.startClocking();
     }
 
     stopRunning(){
@@ -65,19 +66,31 @@ class OpsComponent extends React.Component {
             return;
         }
 
-        clearInterval(this.timerId);
-        this.endTime = moment().valueOf();
+        this.stopClocking();
 
         // тут мы отправляем без id
         // id и tasksCounter присвоится ему в редьюсере
         this.props.onEndTask({
             ...Task,
             taskName: this.state.taskName,
-            startTime: this.startTime,
-            endTime: this.endTime
+            startTime: this.props.startTime,
+            endTime: moment().valueOf()
         });
 
-        this.setState({status: 0});
+        this.setState({
+            currentSecondsCounter: 0,
+            taskName: ''
+        });
+    }
+
+    startClocking(){
+        this.timerId = setInterval(() => {
+            this.setState({ currentSecondsCounter : this.state.currentSecondsCounter + 1 });
+        }, 1000);
+    }
+
+    stopClocking(){
+        clearInterval(this.timerId);
     }
 
     handleTaskNameChange(e){
@@ -88,19 +101,23 @@ class OpsComponent extends React.Component {
         this.setState({ emptyTaskNameWarning: false });
     }
 
-
-
     showCurrentTime(){
-        /*
-            const addZero = (x) => x < 10 ? `0${x}` : x;
-            let s = this.state.currentSecondsCounter % 60;
-            let m = parseInt((this.state.currentSecondsCounter % 3600)/60, 10);
-            let h = parseInt(this.state.currentSecondsCounter / 3600, 10);
-            return `${addZero(h)}:${addZero(m)}:${addZero(s)}`;
-        */
-
         //https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript/19457665#19457665
         return moment().startOf('day').seconds(this.state.currentSecondsCounter).format('H:mm:ss');
+    }
+
+    componentDidMount(){
+        if (this.props.status === 1){
+            this.setState({
+                status: 1,
+                currentSecondsCounter: parseInt((moment().valueOf() - this.props.startTime)/1000, 10)
+            });
+            this.startClocking();
+        }
+    }
+
+    componentWillUnmount (){
+        this.stopClocking();
     }
 
     render() {
@@ -127,7 +144,7 @@ class OpsComponent extends React.Component {
                 <h1 style={currentTimeStyle}>{this.showCurrentTime()}</h1>
             </Paper>
 
-            <RaisedButton onClick={ () => this.clockStatusToggle() }>{ this.state.status ? 'STOP' : 'START' }</RaisedButton>
+            <RaisedButton onClick={ () => this.clockStatusToggle() }>{ this.props.status ? 'STOP' : 'START' }</RaisedButton>
             <br />
             <br />
             <RaisedButton onClick={ () => this.props.onSetFakeData() }>SET FAKE DATA</RaisedButton>
@@ -142,6 +159,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        onStartTask: () => {
+            dispatch(reducer_start_task());
+        },
         onEndTask: (newTask) => {
             dispatch(saga_end_task(newTask));
         },

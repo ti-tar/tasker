@@ -1,4 +1,4 @@
-// обычная модель таски
+// обычная модель
 export default {
     id: null,
     taskName: "",

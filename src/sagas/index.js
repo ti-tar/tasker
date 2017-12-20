@@ -74,6 +74,8 @@ export default function* watchLocalStorage () {
     // .. и мерждим к initialState
     yield put(reducer_get_local_storage_state(localStorageState));
 
+
+
     yield takeEvery(SAGA_SET_FAKE_DATA_TO_STATE, setFakeDataToStateAndLocalStorage);
     yield takeEvery(SAGA_END_TASK, end_task);
     yield takeEvery(SAGA_DELETE_TASK, delete_task);
