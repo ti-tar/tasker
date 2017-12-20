@@ -90,9 +90,19 @@ class OpsComponent extends React.Component {
         this.setState({ emptyTaskNameWarning: false });
     }
 
+
+
     showCurrentTime(){
-        return this.state.currentSecondsCounter;
-        //return moment().format('s');
+        /*
+            const addZero = (x) => x < 10 ? `0${x}` : x;
+            let s = this.state.currentSecondsCounter % 60;
+            let m = parseInt((this.state.currentSecondsCounter % 3600)/60, 10);
+            let h = parseInt(this.state.currentSecondsCounter / 3600, 10);
+            return `${addZero(h)}:${addZero(m)}:${addZero(s)}`;
+        */
+
+        //https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript/19457665#19457665
+        return moment().startOf('day').seconds(this.state.currentSecondsCounter).format('H:mm:ss');
     }
 
     render() {
