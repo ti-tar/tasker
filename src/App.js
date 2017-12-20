@@ -26,7 +26,7 @@ class Main extends React.Component{
         return <main>
             <Switch>
                 <Route exact path={process.env.PUBLIC_URL + '/'} component={IndexContainer}  />
-                <Route path={process.env.PUBLIC_URL + "/info/:task_id"} component={InfoContainer}  />
+                <Route path={process.env.PUBLIC_URL + "info/:task_id"} component={InfoContainer}  />
             </Switch>
         </main>
     }
