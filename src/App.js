@@ -22,20 +22,12 @@ import InfoContainer from "./containers/InfoContainer";
 */
 
 class Main extends React.Component{
-    constructor(...args){
-        super(...args);
-        console.log(process);
-        try {
-            this.uriIndex = process.env.PUBLIC_URL;
-        } catch (err) {
-            this.uriIndex = '/'
-        }
-    }
+
     render(){
         return <main>
             <Switch>
-                <Route exact path={this.uriIndex + '/'} component={IndexContainer}  />
-                <Route path={this.uriIndex + "/info/:task_id"} component={InfoContainer}  />
+                <Route exact path="/" component={IndexContainer}  />
+                <Route path="/info/:task_id" component={InfoContainer}  />
             </Switch>
         </main>
     }

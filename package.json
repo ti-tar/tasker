@@ -1,8 +1,7 @@
 {
-  "name": "project_1",
+  "name": "bro_3_t",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ti-tar.github.io/tasker",
   "dependencies": {
     "material-ui": "^0.20.0",
     "moment": "^2.19.4",
