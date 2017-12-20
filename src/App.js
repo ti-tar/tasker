@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 
 import IndexContainer from "./containers/IndexContainer";
 import InfoContainer from "./containers/InfoContainer";
-import config from "./config";
 
 
 /*
@@ -25,14 +24,18 @@ import config from "./config";
 class Main extends React.Component{
     constructor(...args){
         super(...args);
-        console.log(process.env);
+        console.log(process);
+        try {
+            this.uriIndex = process.env.PUBLIC_URL;
+        } catch (err) {
+            this.uriIndex = '/'
+        }
     }
-
     render(){
         return <main>
             <Switch>
-                <Route exact path={process.env.PUBLIC_URL + '/'} component={IndexContainer}  />
-                <Route path={process.env.PUBLIC_URL + "info/:task_id"} component={InfoContainer}  />
+                <Route exact path={this.uriIndex + '/'} component={IndexContainer}  />
+                <Route path={this.uriIndex + "/info/:task_id"} component={InfoContainer}  />
             </Switch>
         </main>
     }
