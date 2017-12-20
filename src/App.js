@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import IndexContainer from "./containers/IndexContainer";
 import InfoContainer from "./containers/InfoContainer";
+import config from "./config";
 
 
 /*
@@ -22,6 +23,11 @@ import InfoContainer from "./containers/InfoContainer";
 */
 
 class Main extends React.Component{
+    constructor(...args){
+        super(...args);
+        console.log(process.env);
+    }
+
     render(){
         return <main>
             <Switch>
