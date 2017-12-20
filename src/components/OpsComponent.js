@@ -42,7 +42,6 @@ class OpsComponent extends React.Component {
     }
 
     clockStatusToggle(){
-        console.log(this.state.status);
         if (this.state.status === 1){
             this.stopRunning()
         } else {
@@ -56,7 +55,6 @@ class OpsComponent extends React.Component {
 
         this.timerId = setInterval(() => {
             this.setState({ currentSecondsCounter : this.state.currentSecondsCounter + 1 });
-            console.log(this.state.currentSecondsCounter);
         }, 1000)
     }
 

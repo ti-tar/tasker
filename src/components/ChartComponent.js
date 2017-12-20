@@ -2,49 +2,52 @@ import React from "react";
 import { connect } from 'react-redux';
 import { BarChart, Bar, XAxis, YAxis, Legend } from 'recharts';
 import moment from 'moment';
+import config from "../config";
 
 
 class ChartComponent extends React.Component {
 
     getChartData(){
 
-        let currentDay = moment().format('DD');
+        let currentHourStartMoment = moment(
+            `${moment().format('YYYY')}-${moment().format('MM')}-${moment().format('DD')} ${moment().format('HH')}:00:00`,
+            "YYYY-MM-DD HH:mm:ss").valueOf();
 
-        let chartMonth = moment().format('MM');
-        let chartYear = moment().format('YYYY');
+        let barDiapason = 3600 * 1000;
 
-        let currMonthChartData = (new Array(parseInt(currentDay, 10))).fill({}).map((v, index) => {
+        let curentChartData = (new Array(24)).fill({}).map((v, index) => {
 
-            let day = index + 1;
 
-            let dayStartMoment = moment(`${chartYear}-${chartMonth}-${day}`, "YYYY-MM-DD").valueOf();
-            let dayEndMoment = dayStartMoment + (86400 * 1000);
+            let barStartMoment = currentHourStartMoment - barDiapason * index;
+            let barEndMoment = barStartMoment + barDiapason;
 
-            let spentTimeDuringDay = 0;
+            let spentTimeDuringHour = 0;
 
             for (let i in this.props.tasks) {
                 if (
-                        ( dayStartMoment < this.props.tasks[i].startTime && this.props.tasks[i].startTime < dayEndMoment )
+                    ( barStartMoment < this.props.tasks[i].startTime && this.props.tasks[i].startTime < barEndMoment )
                     ||
-                        ( dayStartMoment < this.props.tasks[i].endTime && this.props.tasks[i].endTime < dayEndMoment)
+                    ( barStartMoment < this.props.tasks[i].endTime && this.props.tasks[i].endTime < barEndMoment)
                 ) {
-                    let taskEndTime = this.props.tasks[i].endTime < dayEndMoment ? this.props.tasks[i].endTime : dayEndMoment;
-                    let taskStartTime = this.props.tasks[i].startTime > dayStartMoment ? this.props.tasks[i].startTime : dayStartMoment;
-                    spentTimeDuringDay += taskEndTime - taskStartTime;
+                    let taskEndTime = this.props.tasks[i].endTime < barEndMoment ? this.props.tasks[i].endTime : barEndMoment;
+                    let taskStartTime = this.props.tasks[i].startTime > barStartMoment ? this.props.tasks[i].startTime : barStartMoment;
+                    spentTimeDuringHour += taskEndTime - taskStartTime;
                 }
             }
 
             return {
-                name: day,
-                tv: spentTimeDuringDay / (60*60* 1000)
+                name: moment(barStartMoment).format('HH'),
+                tv: spentTimeDuringHour / (60 * 1000)
             }
-        });
+        }).reverse();
 
-        return currMonthChartData;
+        config.debug && console.log(curentChartData);
+
+        return curentChartData;
     }
 
     legendText(){
-        return `Hours in these days`;
+        return `Minutes in these hours`;
     }
 
     render(){

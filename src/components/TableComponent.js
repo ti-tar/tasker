@@ -10,10 +10,6 @@ import moment from 'moment';
 
 
 class TableComponent extends React.Component {
-    constructor(...args){
-        super(...args);
-        console.log(this);
-    }
 
     render() {
         return <section>
@@ -25,7 +21,7 @@ class TableComponent extends React.Component {
                         <TableHeaderColumn>Name of tasks</TableHeaderColumn>
                         <TableHeaderColumn>Time start</TableHeaderColumn>
                         <TableHeaderColumn>Time end</TableHeaderColumn>
-                        <TableHeaderColumn>Spent time, <br/>hours </TableHeaderColumn>
+                        <TableHeaderColumn>Spent time, <br/>mins </TableHeaderColumn>
                         <TableHeaderColumn>Info</TableHeaderColumn>
                         <TableHeaderColumn>Delete</TableHeaderColumn>
                     </TableRow>
@@ -47,7 +43,7 @@ class TableComponent extends React.Component {
                                     <br/>
                                     { tr.endTime ? moment(tr.endTime).format('HH:mm:ss') : ""}
                                 </TableRowColumn>
-                                <TableRowColumn>{ tr.endTime ? parseInt((tr.endTime - tr.startTime) / 3600000, 10)  : ""}</TableRowColumn>
+                                <TableRowColumn>{ tr.endTime ? parseInt((tr.endTime - tr.startTime) / 60000, 10)  : ""}</TableRowColumn>
                                 <TableRowColumn>
                                     <Link to={{ pathname: '/info/' + tr.id }}><RaisedButton>INFO</RaisedButton></Link>
                                 </TableRowColumn>
