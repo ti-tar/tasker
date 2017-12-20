@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from 'react-redux';
 import { BarChart, Bar, XAxis, YAxis, Legend } from 'recharts';
 import moment from 'moment';
+import config from "../config";
 
 
 class ChartComponent extends React.Component {
@@ -40,6 +41,9 @@ class ChartComponent extends React.Component {
             }
         });
 
+        config.debug && console.log(this);
+        config.debug && console.log(currMonthChartData);
+
         return currMonthChartData;
     }
 
@@ -60,4 +64,10 @@ class ChartComponent extends React.Component {
 
 }
 
-export default connect()(ChartComponent);
+const mapStateToProps = (state) => {
+    return {
+        tasks : state.tasks
+    }
+};
+
+export default connect(mapStateToProps)(ChartComponent);
