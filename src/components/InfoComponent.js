@@ -6,15 +6,15 @@ import moment from 'moment';
 class InfoComponent extends React.Component {
 
     render(){
-
-        if (this.props.task)
+        const { task } = this.props;
+        if (task)
             return <div>
             <h1>info component</h1>
             <ul>
-                <li><b>id:</b> { this.props.task.id }</li>
-                <li><b>taskName:</b> { this.props.task.taskName }</li>
-                <li><b>startTime:</b> { moment(this.props.task.startTime).format('Do MM YYYY, HH:mm:ss') } </li>
-                <li><b>endTime:</b> { moment(this.props.task.endTime).format('Do MM YYYY, HH:mm:ss') }   </li>
+                <li><b>id:</b> { task.id }</li>
+                <li><b>taskName:</b> { task.taskName }</li>
+                <li><b>startTime:</b> { moment(task.startTime).format('Do MM YYYY, HH:mm:ss') } </li>
+                <li><b>endTime:</b> { moment(task.endTime).format('Do MM YYYY, HH:mm:ss') }   </li>
             </ul>
         </div>;
 
