@@ -59,7 +59,7 @@ class ChartComponent extends React.Component {
         return <section>
             <BarChart width={500} height={200} data={this.getChartData()} style={{ margin : '0 auto' }}>
                 <XAxis dataKey="name"/>
-                <YAxis />
+                <YAxis  domain={[0, 60]} />
                 <Legend iconType="circle" content={this.legendText} />
                 <Bar dataKey='tv' fill='#3249c7' data={[]}/>
             </BarChart>

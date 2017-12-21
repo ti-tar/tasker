@@ -38,6 +38,8 @@ let store = createStore(
     window.devToolsExtension && window.devToolsExtension(),
 );
 
+config.debug && console.log(initialState);
+
 sagaMiddleware.run(watchLocalStorage);
 
 render(

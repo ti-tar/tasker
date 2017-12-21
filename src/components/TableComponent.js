@@ -15,7 +15,7 @@ class TableComponent extends React.Component {
         return <section>
             <Table>
 
-                <TableHeader>
+                <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                     <TableRow>
                         <TableHeaderColumn>№</TableHeaderColumn>
                         <TableHeaderColumn>Name of tasks</TableHeaderColumn>
@@ -27,19 +27,19 @@ class TableComponent extends React.Component {
                     </TableRow>
                 </TableHeader>
 
-                <TableBody>
+                <TableBody displayRowCheckbox={false}>
                     {
                         this.props.tasks.map( (tr, index) => {
                             return <TableRow key={index} style={{ backgroundColor: lightBlue50 }}>
                                 <TableRowColumn>{tr.id}</TableRowColumn>
                                 <TableRowColumn>{tr.taskName}</TableRowColumn>
                                 <TableRowColumn>
-                                    {moment(tr.startTime).format('Do YYYY,')}
+                                    {moment(tr.startTime).format('Do MM YYYY,')}
                                     <br/>
                                     {moment(tr.startTime).format('HH:mm:ss')}
                                 </TableRowColumn>
                                 <TableRowColumn>
-                                    { tr.endTime ? moment(tr.endTime).format('Do YYYY,') : ""}
+                                    { tr.endTime ? moment(tr.endTime).format('Do MM YYYY,') : ""}
                                     <br/>
                                     { tr.endTime ? moment(tr.endTime).format('HH:mm:ss') : ""}
                                 </TableRowColumn>

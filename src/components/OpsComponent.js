@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import Task from '../models/Task'
 import moment from 'moment';
 import {
+    saga_set_task_name,
+    saga_start_task,
     saga_end_task,
     saga_set_fake_data
 } from '../actions/saga';
-import { reducer_start_task } from '../actions/reducer';
 import { pink500, blueA200 } from 'material-ui/styles/colors'
 import { TextField , RaisedButton , Paper, Dialog, FlatButton } from "material-ui";
 
@@ -61,7 +62,7 @@ class OpsComponent extends React.Component {
 
     stopRunning(){
 
-        if ( ! this.state.taskName ){
+        if ( ! this.props.taskName ){
             this.setState({emptyTaskNameWarning: true });
             return;
         }
@@ -93,7 +94,7 @@ class OpsComponent extends React.Component {
     }
 
     handleTaskNameChange(e){
-        this.setState({ taskName : e.target.value });
+        this.props.onSetTaskName(e.target.value);
     }
 
     hideWarningDialog(){
@@ -137,15 +138,13 @@ class OpsComponent extends React.Component {
 
             <p className="tack_title">Name of your task</p>
 
-            <TextField id="taskName" type="text" value={this.state.taskName} hintText="Enter the Task Name" onChange={(e)=>this.handleTaskNameChange(e)}  />
+            <TextField id="taskName" type="text" value={this.props.taskName} hintText="Enter the Task Name" onChange={(e)=>this.handleTaskNameChange(e)}  />
 
             <Paper circle={true} style={paperStyle}>
                 <h1 style={currentTimeStyle}>{this.showCurrentTime()}</h1>
             </Paper>
 
-            <RaisedButton onClick={ () => this.clockStatusToggle() }>{ this.props.status ? 'STOP' : 'START' }</RaisedButton>
-            <br />
-            <br />
+            <RaisedButton style={{margin:'1em'}} onClick={ () => this.clockStatusToggle() }>{ this.props.status ? 'STOP' : 'START' }</RaisedButton>
             <RaisedButton onClick={ () => this.props.onSetFakeData() }>SET FAKE DATA</RaisedButton>
 
         </section>;
@@ -153,19 +152,26 @@ class OpsComponent extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return state;
+    return {
+        status : state.status,
+        taskName : state.taskName,
+        startTime: state.startTime
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onStartTask: () => {
-            dispatch(reducer_start_task());
+            dispatch(saga_start_task());
         },
         onEndTask: (newTask) => {
             dispatch(saga_end_task(newTask));
         },
         onSetFakeData: () => {
             dispatch(saga_set_fake_data());
+        },
+        onSetTaskName: (taskName) => {
+            dispatch(saga_set_task_name(taskName));
         }
     }
 };

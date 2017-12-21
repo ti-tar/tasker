@@ -5,9 +5,10 @@ import {
     REDUCER_START_TASK,
     REDUCER_END_TASK,
     REDUCER_DELETE_TASK,
-    REDUCER_GET_LOCAL_STORAGE_STATE,
     REDUCER_SET_LOCAL_STORAGE_STATE,
-    REDUCER_SET_FAKE_DATA_TO_STATE } from '../actions/reducer';
+    REDUCER_SET_FAKE_DATA_TO_STATE,
+    REDUCER_SET_TASK_NAME
+} from '../actions/reducer';
 
 
 export default (state = {}, action ) => {
@@ -27,6 +28,7 @@ export default (state = {}, action ) => {
                 ...state,
                 tasksCounter: newTasksCounter,
                 status: 0,
+                taskName: "",
                 tasks: [...state.tasks, {...action.newTask, id: newTasksCounter}]
             };
 
@@ -38,12 +40,6 @@ export default (state = {}, action ) => {
 
             return {...state, tasks: state.tasks.filter(task=>task.id !== action.id)};
 
-
-        case REDUCER_GET_LOCAL_STORAGE_STATE:
-            config.debug && console.log(`reducer: ${action.type}`);
-
-            return { ...state, ...action.localStorageState };
-
         case REDUCER_SET_LOCAL_STORAGE_STATE:
             config.debug && console.log(`reducer: ${action.type}`);
 
@@ -54,6 +50,11 @@ export default (state = {}, action ) => {
             config.debug && console.log(`reducer: ${action.type}`);
 
             return { ...state, ...action.fakeState};
+
+        case REDUCER_SET_TASK_NAME:
+            config.debug && console.log(`reducer: ${action.type}`);
+
+            return { ...state, taskName: action.taskName };
 
         default:
             return state;
