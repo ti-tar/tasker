@@ -3,15 +3,15 @@ export default {
     locale: 'ua',
     debug: true,
     faker: {
-        taskRange: { // in minutes
+        taskCompletionTime: {
             min : 20,
             max : 3*60,
         },
         // how many days
-        totalTimeRange: 2,
+        totalWorkPeriod: 2,
         // number of performed task per day
         diligence : {
-            min: 1,
+            min: 3,
             max: 8,
         }
     }

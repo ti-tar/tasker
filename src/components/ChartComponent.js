@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from 'react-redux';
 import { BarChart, Bar, XAxis, YAxis, Legend } from 'recharts';
 import moment from 'moment';
+import config from '../config';
 
 
 class ChartComponent extends React.Component {
@@ -24,9 +25,14 @@ class ChartComponent extends React.Component {
 
             for (let i in this.props.tasks) {
                 if (
+                    //либо начало задачи в диапазоне столбца
                     ( barStartMoment < this.props.tasks[i].startTime && this.props.tasks[i].startTime < barEndMoment )
                     ||
-                    ( barStartMoment < this.props.tasks[i].endTime && this.props.tasks[i].endTime < barEndMoment)
+                    //либо конец
+                    ( barStartMoment < this.props.tasks[i].endTime && this.props.tasks[i].endTime < barEndMoment )
+                    //либо весь столбец в диапазоне задачи
+                    ||
+                    ( barStartMoment >= this.props.tasks[i].startTime && barEndMoment <= this.props.tasks[i].endTime)
                 ) {
                     let taskEndTime = this.props.tasks[i].endTime < barEndMoment ? this.props.tasks[i].endTime : barEndMoment;
                     let taskStartTime = this.props.tasks[i].startTime > barStartMoment ? this.props.tasks[i].startTime : barStartMoment;
@@ -39,6 +45,8 @@ class ChartComponent extends React.Component {
                 tv: spentTimeDuringHour / (60 * 1000)
             }
         }).reverse();
+
+        config.debug && console.log(curentChartData);
 
         return curentChartData;
     }

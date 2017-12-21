@@ -70,12 +70,11 @@ class OpsComponent extends React.Component {
 
         // тут мы отправляем без id
         // id и tasksCounter присвоится ему в редьюсере
-        this.props.onEndTask({
-            ...Task,
-            taskName: this.state.taskName,
-            startTime: this.props.startTime,
-            endTime: moment().valueOf()
-        });
+        this.props.onEndTask(new Task({
+                taskName: this.state.taskName,
+                startTime: this.props.startTime,
+                endTime: moment().valueOf()
+        }));
 
         this.setState({
             currentSecondsCounter: 0,
