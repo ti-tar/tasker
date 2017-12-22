@@ -1,8 +1,18 @@
 import fakeTasks from '../api/fakeStateData';
 
-describe('sopm,ething', () => {
+describe('Faker tests', () => {
     it('Faker basic test.', () => {
-        expect(fakeTasks().tasksCounter).toBeGreaterThan(0);
-        expect(fakeTasks().tasks.length).toBeGreaterThan(0);
+        const newFakeTasks = fakeTasks();
+
+        expect(newFakeTasks.tasksCounter).toBeGreaterThan(0);
+        expect(newFakeTasks.tasks.length).toBeGreaterThan(0);
+        expect(newFakeTasks.tasksCounter === newFakeTasks.tasks.length).toBeTruthy();
+    });
+
+    it('Two fakeDataSet comparison', () => {
+        const newFakeTasks1 = fakeTasks();
+        const newFakeTasks2 = fakeTasks();
+
+        expect(newFakeTasks1).not.toEqual(newFakeTasks2);
     });
 });

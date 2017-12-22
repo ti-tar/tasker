@@ -88,7 +88,7 @@ describe('Reducer tests:', () => {
             type: "UNDEFINED_ACTION",
             taskName: 'UNDEFINED_ACTION_NAME'
         };
-        
+
         expect(reducer(initialState, action)).toEqual(initialState);
     });
 
