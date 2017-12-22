@@ -29,7 +29,7 @@ export default (state, action ) => {
                 tasksCounter: newTasksCounter,
                 status: 0,
                 taskName: "",
-                tasks: [...state.tasks, {...action.newTask, id: newTasksCounter, taskName :state.taskName}]
+                tasks: [...state.tasks, {...action.newTask, id: newTasksCounter, taskName: state.taskName}]
             };
 
             return stateWithNewTask;
