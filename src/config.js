@@ -1,7 +1,7 @@
 export default {
     localStorageKey: "blablablatasks",
     locale: 'ua',
-    debug: true,
+    debug: process.env.REACT_APP_DEBUG === 'true' ? true : false,
     faker: {
         taskCompletionTime: {
             min : 20,

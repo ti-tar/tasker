@@ -8,25 +8,10 @@ import {
     saga_end_task,
     saga_set_fake_data
 } from '../actions/saga';
-import { pink500, blueA200 } from 'material-ui/styles/colors'
+import { pink500 } from 'material-ui/styles/colors'
 import { TextField , RaisedButton , Paper, Dialog, FlatButton } from "material-ui";
 
-
-const currentTimeStyle = {
-    fontSize: `21px`,
-    fontStyle: 'normal',
-    color: blueA200,
-    paddingTop: '115px'
-};
-
-const paperStyle = {
-    display: 'block',
-    height: 250,
-    width: 250,
-    margin: `1em auto`,
-    textAlign: 'center',
-    zDepth: 1
-};
+import { currentTimeStyles, paperStyles, taskNameStyles, taskInputStyles }  from '../bro3Theme';
 
 
 class OpsComponent extends React.Component {
@@ -136,16 +121,16 @@ class OpsComponent extends React.Component {
                 You've missed to fill the task name.
             </Dialog>
 
-            <p className="tack_title">Name of your task</p>
+            <p style={taskNameStyles} >Name of your task</p>
 
-            <TextField id="taskName" type="text" value={this.props.taskName} hintText="Enter the Task Name" onChange={(e)=>this.handleTaskNameChange(e)}  />
+            <TextField id="taskName" type="text" value={this.props.taskName} hintText="Enter the Task Name" onChange={(e)=>this.handleTaskNameChange(e)} inputStyle={taskInputStyles} />
 
-            <Paper circle={true} style={paperStyle}>
-                <h1 style={currentTimeStyle}>{this.showCurrentTime()}</h1>
+            <Paper circle={true} style={paperStyles}>
+                <h1 style={currentTimeStyles}>{this.showCurrentTime()}</h1>
             </Paper>
 
-            <RaisedButton style={{margin:'1em'}} onClick={ () => this.clockStatusToggle() }>{ this.props.status ? 'STOP' : 'START' }</RaisedButton>
-            <RaisedButton onClick={ () => this.props.onSetFakeData() }>SET FAKE DATA</RaisedButton>
+            <RaisedButton onClick={ () => this.clockStatusToggle() } label={ this.props.status ? 'STOP' : 'START' } style={{margin: '1em'}} />
+            <RaisedButton onClick={ () => this.props.onSetFakeData() } label="SET FAKE DATA" />
 
         </section>;
     }

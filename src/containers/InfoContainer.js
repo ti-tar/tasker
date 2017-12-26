@@ -8,7 +8,9 @@ export default (props) => {
     return <div>
         <header>
             <nav>
-                <Link to="/"><RaisedButton label='Index page' /></Link>
+                <Link to="/">
+                    <RaisedButton label='Index page' />
+                </Link>
             </nav>
         </header>
         <section>

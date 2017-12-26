@@ -45,10 +45,12 @@ class TableComponent extends React.Component {
                                 </TableRowColumn>
                                 <TableRowColumn>{ tr.endTime ? parseInt((tr.endTime - tr.startTime) / 60000, 10)  : ""}</TableRowColumn>
                                 <TableRowColumn>
-                                    <Link to={{ pathname: '/info/' + tr.id }}><RaisedButton>INFO</RaisedButton></Link>
+                                    <Link to={{ pathname: '/info/' + tr.id }}>
+                                        <RaisedButton label='INFO' />
+                                    </Link>
                                 </TableRowColumn>
                                 <TableRowColumn>
-                                    <RaisedButton onClick={ () => this.props.taskDelete(tr.id) }>DELETE</RaisedButton>
+                                    <RaisedButton onClick={ () => this.props.taskDelete(tr.id) } label='DELETE' />
                                 </TableRowColumn>
                             </TableRow>}
                         )
