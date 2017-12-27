@@ -2,17 +2,22 @@ import React from "react";
 import { connect } from 'react-redux';
 import Task from '../models/Task'
 import moment from 'moment';
+import { TextField , RaisedButton , Paper, Dialog, FlatButton } from "material-ui";
+
 import {
     saga_set_task_name,
     saga_start_task,
     saga_end_task,
     saga_set_fake_data
 } from '../actions/saga';
-import { pink500 } from 'material-ui/styles/colors'
-import { TextField , RaisedButton , Paper, Dialog, FlatButton } from "material-ui";
 
-import { currentTimeStyles, paperStyles, taskNameStyles, taskInputStyles }  from '../bro3Theme';
-
+import {
+    currentTimeStyles,
+    paperStyles,
+    taskNameStyles,
+    taskInputStyles,
+    dialogTitleStyles
+}  from '../bro3Theme';
 
 class OpsComponent extends React.Component {
 
@@ -111,13 +116,9 @@ class OpsComponent extends React.Component {
             <FlatButton label="Cancel" onClick={()=> this.hideWarningDialog()}/>
         ];
 
-        const titleStyle = {
-            color: pink500
-        };
-
         return <section>
 
-            <Dialog open={this.state.emptyTaskNameWarning} titleStyle={titleStyle} actions={buttons} title="Empty task name!">
+            <Dialog open={this.state.emptyTaskNameWarning} titleStyle={dialogTitleStyles} actions={buttons} title="Empty task name!">
                 You've missed to fill the task name.
             </Dialog>
 

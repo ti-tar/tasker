@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { BarChart, Bar, XAxis, YAxis, Legend } from 'recharts';
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Legend } from 'recharts';
 import moment from 'moment';
 import config from '../config';
 
@@ -57,12 +57,14 @@ class ChartComponent extends React.Component {
 
     render(){
         return <section>
-            <BarChart width={500} height={200} data={this.getChartData()} style={{ margin : '0 auto' }}>
+
+            <BarChart data={this.getChartData()} width={500} height={200} style={{ margin : '0 auto' }}>
                 <XAxis dataKey="name"/>
                 <YAxis  domain={[0, 60]} />
                 <Legend iconType="circle" content={this.legendText} />
                 <Bar dataKey='tv' fill='#3249c7' data={[]}/>
             </BarChart>
+
         </section>;
     }
 

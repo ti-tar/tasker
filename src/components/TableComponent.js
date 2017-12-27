@@ -13,7 +13,7 @@ class TableComponent extends React.Component {
 
     render() {
         return <section>
-            <Table>
+            <Table selectable={false}>
 
                 <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                     <TableRow>

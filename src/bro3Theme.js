@@ -3,46 +3,14 @@ import {
     cyan500, cyan700, grey400,
     pinkA200, grey100, grey300, grey500,
     darkBlack, white,
-    fullBlack
+    fullBlack, pink500, transparent
 } from 'material-ui/styles/colors';
-
-import typography from 'material-ui/styles/typography';
 
 import { darken, fade } from 'material-ui/utils/colorManipulator';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-/// -------
-
-export const currentTimeStyles = {
-    fontSize: `27px`,
-    fontStyle: 'normal',
-    color: '#3C40C6',
-    paddingTop: '110px'
-};
-
-export const paperStyles = {
-    display: 'block',
-    height: 250,
-    width: 250,
-    margin: `1em auto`,
-    textAlign: 'center',
-    zDepth: 1
-};
-
-export const taskNameStyles = {
-    color: '#7E7E7E'
-};
-
-export const taskInputStyles = {
-    color: '#3C40C6',
-};
-
-// -------
-
-
 // Общая тема
-//
 // http://www.material-ui.com/#/customization/themes
 
 const palette = {
@@ -81,8 +49,53 @@ const more = {
         fontSize: 12,
         fontWeight: 'bold'
     },
+    flatButton: {
+        color: transparent,
+        buttonFilterColor: '#999999',
+        disabledTextColor: '#1ABAD4',
+        textColor: '#1ABAD4',
+        primaryTextColor: palette.primary1Color,
+        secondaryTextColor: palette.accent1Color,
+        fontSize: 14,
+        fontWeight: 'bold'
+    },
+    dialog: {
+        titleFontSize: 22,
+        bodyFontSize: 16,
+        bodyColor: '#666666'
+    },
 };
 
 const bro3Theme = getMuiTheme(more);
 
 export default bro3Theme;
+
+/// ---- additional Styles
+
+export const currentTimeStyles = {
+    fontSize: `27px`,
+    fontStyle: 'normal',
+    color: '#3C40C6',
+    paddingTop: '110px'
+};
+
+export const paperStyles = {
+    display: 'block',
+    height: 250,
+    width: 250,
+    margin: `1em auto`,
+    textAlign: 'center',
+    zDepth: 1
+};
+
+export const taskNameStyles = {
+    color: '#7E7E7E'
+};
+
+export const taskInputStyles = {
+    color: '#3C40C6',
+};
+
+export const dialogTitleStyles = {
+    color: '#BD2A5C'
+};
