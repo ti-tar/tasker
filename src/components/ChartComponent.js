@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Legend } from 'recharts';
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Legend, CartesianGrid } from 'recharts';
 import moment from 'moment';
 import config from '../config';
 
@@ -51,20 +51,17 @@ class ChartComponent extends React.Component {
         return curentChartData;
     }
 
-    legendText(){
-        return `Minutes in these hours`;
-    }
-
     render(){
         return <section>
-
-            <BarChart data={this.getChartData()} width={500} height={200} style={{ margin : '0 auto' }}>
-                <XAxis dataKey="name"/>
-                <YAxis  domain={[0, 60]} />
-                <Legend iconType="circle" content={this.legendText} />
-                <Bar dataKey='tv' fill='#3249c7' data={[]}/>
-            </BarChart>
-
+            <ResponsiveContainer minHeight={300}>
+                <BarChart data={this.getChartData()}>
+                    <XAxis dataKey="name"/>
+                    <YAxis  domain={[0, 60]} />
+                    <Legend wrapperStyle={{color:'#000'}} />
+                    <CartesianGrid />
+                    <Bar dataKey='tv' fill='#3249c7' barSize={25} name="Minutes in these hours" />
+                </BarChart>
+            </ResponsiveContainer>
         </section>;
     }
 

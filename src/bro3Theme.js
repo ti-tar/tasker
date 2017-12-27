@@ -3,7 +3,7 @@ import {
     cyan500, cyan700, grey400,
     pinkA200, grey100, grey300, grey500,
     darkBlack, white,
-    fullBlack, pink500, transparent
+    fullBlack, transparent
 } from 'material-ui/styles/colors';
 
 import { darken, fade } from 'material-ui/utils/colorManipulator';
